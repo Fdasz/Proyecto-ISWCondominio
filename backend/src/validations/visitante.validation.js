@@ -1,6 +1,5 @@
 "use strict";
 import Joi from "joi";
-import rutRegex from "./rutRegex.js";
 
 // Query validation: for searching/filtering visitantes
 export const visitanteQueryValidation = Joi.object({
@@ -50,7 +49,6 @@ export const visitanteQueryValidation = Joi.object({
     "object.missing": "Debes proporcionar al menos un parámetro de búsqueda.",
 });
 
-// Body validation: for creating/updating visitantes
 export const visitanteBodyValidation = Joi.object({
     rut_visitante_num: Joi.string()
         .pattern(/^\d{7,8}$/)
