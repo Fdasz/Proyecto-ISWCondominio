@@ -20,7 +20,12 @@ export async function getVisitante(req, res) {
     try {
         const { rut_visitante_num, rut_visitante_dv, id_visitante, nombre_visitante } = req.query;
 
-        const { error } = visitanteQueryValidation.validate({ rut_visitante_num, rut_visitante_dv, id_visitante, nombre_visitante });
+        const { error } = visitanteQueryValidation.validate({
+            rut_visitante_num,
+            rut_visitante_dv,
+            id_visitante,
+            nombre_visitante
+        });
 
         if (error) return handleErrorClient(res, 400, error.message);
 
@@ -77,7 +82,11 @@ export async function updateVisitante(req, res) {
         const { rut_visitante_num, rut_visitante_dv } = req.body;
         const { body } = req;
 
-        const { error: queryError } = visitanteQueryValidation.validate({ id_visitante, rut_visitante_num, rut_visitante_dv });
+        const { error: queryError } = visitanteQueryValidation.validate({
+            id_visitante,
+            rut_visitante_num,
+            rut_visitante_dv
+        });
         if (queryError) return handleErrorClient(res, 400, queryError.message);
 
         const { error: bodyError } = visitanteBodyValidation.validate(body);

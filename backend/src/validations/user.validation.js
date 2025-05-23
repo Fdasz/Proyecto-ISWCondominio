@@ -68,7 +68,7 @@ export const userBodyValidation = Joi.object({
     }),
   email: Joi.string()
     .min(15)
-    .max(35)
+    .max(60)
     .email()
     .messages({
       "string.empty": "El correo electrónico no puede estar vacío.",

@@ -1,6 +1,5 @@
 "use strict";
 import Joi from "joi";
-import rutRegex from "./rutRegex.js";
 
 const domainEmailValidator = (value, helper) => {
     const [local, domain] = value.split("@");
@@ -23,15 +22,17 @@ export const residenteQueryValidation = Joi.object({
             "number.integer": "El id debe ser un número entero",
             "number.positive": "El id debe ser un número positivo",
         }),
-    rut_residente: Joi.string()
-        .pattern(rutRegex)
-        .min(9)
-        .max(12)
+    rut_residente_num: Joi.string()
+        .pattern(/^\d{7,8}$/)
         .messages({
-            "string.pattern.base": "Formato rut inválido, debe ser xx.xxx.xxx-x o xxxxxxxx-x.",
-            "string.empty": "El rut es requerido",
-            "string.min": "El rut debe tener al menos 9 caracteres",
-            "string.max": "El rut no debe tener más de 12 caracteres",
+            "string.pattern.base": "El número de RUT debe tener 7 u 8 dígitos.",
+            "string.empty": "El número de RUT es requerido."
+        }),
+    rut_residente_dv: Joi.string()
+        .pattern(/^[\dkK]$/)
+        .messages({
+            "string.pattern.base": "El dígito verificador debe ser un número o K.",
+            "string.empty": "El dígito verificador es requerido."
         }),
     email_residente: Joi.string()
         .email()
@@ -41,13 +42,13 @@ export const residenteQueryValidation = Joi.object({
             "string.empty": "El email es requerido",
         }),
 })
-    .or("id_residente", "email_residente", "rut_residente")
+    .or("id_residente", "email_residente", "rut_residente_num")
     .unknown(false)
     .messages({
-    "object.unknown": "No se permiten propiedades adicionales.",
-    "object.missing":
-    "Debes proporcionar al menos un parámetro: id, email o rut.",
-});
+        "object.unknown": "No se permiten propiedades adicionales.",
+        "object.missing":
+            "Debes proporcionar al menos un parámetro: id, email o rut.",
+    });
 
 export const residenteBodyValidation = Joi.object({
     rut_residente_num: Joi.string()

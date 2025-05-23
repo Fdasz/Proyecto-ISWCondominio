@@ -22,7 +22,12 @@ export async function getResidente(req, res) {
     try {
         const { rut_residente_num, rut_residente_dv, id_residente, email_residente } = req.query;
 
-        const { error } = residenteQueryValidation.validate({ rut_residente_num, rut_residente_dv, id_residente, email_residente });
+        const { error } = residenteQueryValidation.validate({
+            rut_residente_num,
+            rut_residente_dv,
+            id_residente,
+            email_residente,
+        });
         if (error) return handleErrorClient(res, 400, error.message);
 
         const [residente, errorResidente] = await getResidenteService({
@@ -76,7 +81,11 @@ export async function updateResidente(req, res) {
         const { rut_residente_num, rut_residente_dv } = req.body; 
         const { body } = req;
 
-        const { error: queryError } = residenteQueryValidation.validate({ id_residente, rut_residente_num, rut_residente_dv });
+        const { error: queryError } = residenteQueryValidation.validate({
+            id_residente,
+            rut_residente_num,
+            rut_residente_dv,
+        });
         if (queryError) return handleErrorClient(res, 400, queryError.message);
 
         const { error: bodyError } = residenteBodyValidation.validate(body);
