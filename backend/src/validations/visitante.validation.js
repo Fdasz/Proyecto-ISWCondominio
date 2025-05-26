@@ -52,14 +52,12 @@ export const visitanteQueryValidation = Joi.object({
 export const visitanteBodyValidation = Joi.object({
     rut_visitante_num: Joi.string()
         .pattern(/^\d{7,8}$/)
-        .required()
         .messages({
             "string.pattern.base": "El número de RUT debe tener 7 u 8 dígitos.",
             "string.empty": "El número de RUT es requerido.",
         }),
     rut_visitante_dv: Joi.string()
         .pattern(/^[\dkK]$/)
-        .required()
         .messages({
             "string.pattern.base": "El dígito verificador debe ser un número o K.",
             "string.empty": "El dígito verificador es requerido.",
@@ -82,7 +80,7 @@ export const visitanteBodyValidation = Joi.object({
             "string.max": "La patente debe tener como máximo 9 caracteres.",
             "string.pattern.base": "La patente solo puede contener letras, números y guiones.",
         }),
-})
+}).min(1)
 .unknown(false)
 .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
