@@ -79,21 +79,13 @@ export async function createVisitante(req, res) {
 export async function updateVisitante(req, res) {
     try {
         const { id_visitante } = req.params;
-        const { rut_visitante_num, rut_visitante_dv } = req.body;
         const { body } = req;
-
-        const { error: queryError } = visitanteQueryValidation.validate({
-            id_visitante,
-            rut_visitante_num,
-            rut_visitante_dv
-        });
-        if (queryError) return handleErrorClient(res, 400, queryError.message);
 
         const { error: bodyError } = visitanteBodyValidation.validate(body);
         if (bodyError) return handleErrorClient(res, 400, bodyError.message);
 
         const [visitante, errorVisitante] = await updateVisitanteService(
-            { id: id_visitante, rut_num: rut_visitante_num, rut_dv: rut_visitante_dv },
+            { id: id_visitante },
             body
         );
 
@@ -105,7 +97,6 @@ export async function updateVisitante(req, res) {
     }
 }
 
-// Delete visitante
 export async function deleteVisitante(req, res) {
     try {
         const { id_visitante } = req.params;
