@@ -17,13 +17,13 @@ import {
 
 export async function getUser(req, res) {
   try {
-    const { rut, id, email } = req.query;
+    const { rut_usuario, id_usuario, email_usuario } = req.query;
 
-    const { error } = userQueryValidation.validate({ rut, id, email });
+    const { error } = userQueryValidation.validate({ rut_usuario, id_usuario, email_usuario });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [user, errorUser] = await getUserService({ rut, id, email });
+    const [user, errorUser] = await getUserService({ rut_usuario, id_usuario, email_usuario });
 
     if (errorUser) return handleErrorClient(res, 404, errorUser);
 
@@ -53,13 +53,13 @@ export async function getUsers(req, res) {
 
 export async function updateUser(req, res) {
   try {
-    const { rut, id, email } = req.query;
+    const { rut_usuario, id_usuario, email_usuario } = req.query;
     const { body } = req;
 
     const { error: queryError } = userQueryValidation.validate({
-      rut,
-      id,
-      email,
+      rut_usuario,
+      id_usuario,
+      email_usuario,
     });
 
     if (queryError) {
@@ -81,7 +81,7 @@ export async function updateUser(req, res) {
         bodyError.message,
       );
 
-    const [user, userError] = await updateUserService({ rut, id, email }, body);
+    const [user, userError] = await updateUserService({ rut_usuario, id_usuario, email_usuario }, body);
 
     if (userError) return handleErrorClient(res, 400, "Error modificando al usuario", userError);
 
@@ -93,12 +93,12 @@ export async function updateUser(req, res) {
 
 export async function deleteUser(req, res) {
   try {
-    const { rut, id, email } = req.query;
+    const { rut_usuario, id_usuario, email_usuario } = req.query;
 
     const { error: queryError } = userQueryValidation.validate({
-      rut,
-      id,
-      email,
+      rut_usuario,
+      id_usuario,
+      email_usuario,
     });
 
     if (queryError) {
@@ -111,9 +111,9 @@ export async function deleteUser(req, res) {
     }
 
     const [userDelete, errorUserDelete] = await deleteUserService({
-      rut,
-      id,
-      email,
+      rut_usuario,
+      id_usuario,
+      email_usuario,
     });
 
     if (errorUserDelete) return handleErrorClient(res, 404, "Error eliminado al usuario", errorUserDelete);

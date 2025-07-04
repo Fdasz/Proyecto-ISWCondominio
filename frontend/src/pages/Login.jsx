@@ -14,6 +14,7 @@ const Login = () => {
     } = useLogin();
 
     const loginSubmit = async (data) => {
+        console.log(data); // Add this line
         try {
             const response = await login(data);
             if (response.status === 'Success') {
@@ -33,7 +34,7 @@ const Login = () => {
                 fields={[
                     {
                         label: "Correo electrónico",
-                        name: "email",
+                        name: "email_usuario", // <-- updated
                         placeholder: "example@gmail.cl",
                         fieldType: 'input',
                         type: "email",
@@ -44,7 +45,7 @@ const Login = () => {
                         validate: {
                             emailDomain: (value) => value.endsWith('@gmail.cl') || 'El correo debe terminar en @gmail.cl'
                         },
-                        onChange: (e) => handleInputChange('email', e.target.value),
+                        onChange: (e) => handleInputChange('email_usuario', e.target.value), // <-- updated
                     },
                     {
                         label: "Contraseña",

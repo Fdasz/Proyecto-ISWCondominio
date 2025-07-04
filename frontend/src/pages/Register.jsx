@@ -40,7 +40,7 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 				fields={[
 					{
 						label: "Nombre completo",
-						name: "nombreCompleto",
+						name: "nombre_usuario", // <-- updated
 						placeholder: "Diego Alexis Salazar Jara",
                         fieldType: 'input',
 						type: "text",
@@ -52,7 +52,7 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 					},
                     {
                         label: "Correo electrónico",
-                        name: "email",
+                        name: "email_usuario", // <-- updated
                         placeholder: "example@gmail.cl",
                         fieldType: 'input',
                         type: "email",
@@ -63,11 +63,11 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
                         validate: {
                             emailDomain: (value) => value.endsWith('@gmail.cl') || 'El correo debe terminar en @gmail.cl'
                         },
-                        onChange: (e) => handleInputChange('email', e.target.value)
+                        onChange: (e) => handleInputChange('email_usuario', e.target.value) // <-- updated
                     },
                     {
 						label: "Rut",
-                        name: "rut",
+                        name: "rut_usuario", // <-- updated
                         placeholder: "23.770.330-1",
                         fieldType: 'input',
                         type: "text",
@@ -77,7 +77,7 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 						patternMessage: "Debe ser xx.xxx.xxx-x o xxxxxxxx-x",
 						required: true,
                         errorMessageData: errorRut,
-                        onChange: (e) => handleInputChange('rut', e.target.value)
+                        onChange: (e) => handleInputChange('rut_usuario', e.target.value) // <-- updated
                     },
                     {
                         label: "Contraseña",

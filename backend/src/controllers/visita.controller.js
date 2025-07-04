@@ -23,10 +23,8 @@ export async function getVisitas(req, res) {
             endDate,
             nombre_visitante,
             nombre_residente,
-            rut_visitante_num,
-            rut_visitante_dv,
-            rut_residente_num,
-            rut_residente_dv
+            rut_visitante,
+            rut_usuario
         } = req.query;
 
         const { error } = visitaQueryValidation.validate({
@@ -34,10 +32,8 @@ export async function getVisitas(req, res) {
             endDate,
             nombre_visitante,
             nombre_residente,
-            rut_visitante_num,
-            rut_visitante_dv,
-            rut_residente_num,
-            rut_residente_dv
+            rut_visitante,
+            rut_usuario
         });
         if (error) return handleErrorClient(res, 400, error.message);
 
@@ -46,10 +42,8 @@ export async function getVisitas(req, res) {
             endDate,
             nombre_visitante,
             nombre_residente,
-            rut_visitante_num,
-            rut_visitante_dv,
-            rut_residente_num,
-            rut_residente_dv
+            rut_visitante,
+            rut_usuario
         });
 
         if (errorVisitas) return handleErrorClient(res, 404, errorVisitas);
@@ -65,23 +59,16 @@ export async function getVisitas(req, res) {
 // Actualizar visita
 export async function updateVisita(req, res) {
     try {
-        const { rut_visitante_num, rut_visitante_dv, rut_residente_num, rut_residente_dv, fecha_visita } = req.body;
+        const { id_visita } = req.params;
         const { body } = req;
 
-        const { error: queryError } = visitaQueryValidation.validate({
-            rut_visitante_num,
-            rut_visitante_dv,
-            rut_residente_num,
-            rut_residente_dv,
-            fecha_visita
-        });
-        if (queryError) return handleErrorClient(res, 400, queryError.message);
+        if (!id_visita) return handleErrorClient(res, 400, "id_visita es requerido");
 
         const { error: bodyError } = visitaBodyValidation.validate(body);
         if (bodyError) return handleErrorClient(res, 400, bodyError.message);
 
         const [visita, errorVisita] = await updateVisitaService(
-            { rut_visitante_num, rut_visitante_dv, rut_residente_num, rut_residente_dv, fecha_visita },
+            { id_visita },
             body
         );
 
@@ -96,24 +83,11 @@ export async function updateVisita(req, res) {
 // Eliminar visita
 export async function deleteVisita(req, res) {
     try {
-        const { rut_visitante_num, rut_visitante_dv, rut_residente_num, rut_residente_dv, fecha_visita } = req.query;
+        const { id_visita } = req.params;
 
-        const { error } = visitaQueryValidation.validate({
-            rut_visitante_num,
-            rut_visitante_dv,
-            rut_residente_num,
-            rut_residente_dv,
-            fecha_visita
-        });
-        if (error) return handleErrorClient(res, 400, error.message);
+        if (!id_visita) return handleErrorClient(res, 400, "id_visita es requerido");
 
-        const [visita, errorVisita] = await deleteVisitaService({
-            rut_visitante_num,
-            rut_visitante_dv,
-            rut_residente_num,
-            rut_residente_dv,
-            fecha_visita,
-        });
+        const [visita, errorVisita] = await deleteVisitaService({ id_visita });
 
         if (errorVisita) return handleErrorClient(res, 404, errorVisita);
 

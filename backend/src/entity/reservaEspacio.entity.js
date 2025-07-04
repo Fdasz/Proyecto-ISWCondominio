@@ -33,19 +33,13 @@ const ReservaEspacioSchema = new EntitySchema({
       },
       nullable: false,
     },
-    residente: {
+    usuario: {
       type: "many-to-one",
-      target: "Residente",
-      joinColumns: [
-        {
-          name: "rut_residente_num",
-          referencedColumnName: "rut_residente_num"
-        },
-        {
-          name: "rut_residente_dv",
-          referencedColumnName: "rut_residente_dv"
-        }
-      ],
+      target: "User",
+      joinColumn: {
+        name: "rut_usuario",
+        referencedColumnName: "rut_usuario"
+      },
       nullable: false
     }
   }

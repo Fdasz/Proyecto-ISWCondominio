@@ -8,7 +8,7 @@ import { ACCESS_TOKEN_SECRET } from "../config/configEnv.js";
 export async function loginService(user) {
   try {
     const userRepository = AppDataSource.getRepository(User);
-    const { email, password } = user;
+    const { email_usuario, password } = user;
 
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
@@ -16,7 +16,7 @@ export async function loginService(user) {
     });
 
     const userFound = await userRepository.findOne({
-      where: { email }
+      where: { email_usuario }
     });
 
     if (!userFound) {
@@ -30,9 +30,9 @@ export async function loginService(user) {
     }
 
     const payload = {
-      nombreCompleto: userFound.nombreCompleto,
-      email: userFound.email,
-      rut: userFound.rut,
+      nombre_usuario: userFound.nombre_usuario,
+      email_usuario: userFound.email_usuario,
+      rut_usuario: userFound.rut,
       rol: userFound.rol,
     };
 
@@ -52,7 +52,7 @@ export async function registerService(user) {
   try {
     const userRepository = AppDataSource.getRepository(User);
 
-    const { nombreCompleto, rut, email } = user;
+    const { nombre_usuario, rut_usuario, email_usuario, rol } = user;
 
     const createErrorMessage = (dataInfo, message) => ({
       dataInfo,
@@ -61,7 +61,7 @@ export async function registerService(user) {
 
     const existingEmailUser = await userRepository.findOne({
       where: {
-        email,
+        email_usuario,
       },
     });
     
@@ -69,18 +69,18 @@ export async function registerService(user) {
 
     const existingRutUser = await userRepository.findOne({
       where: {
-        rut,
+        rut_usuario,
       },
     });
 
     if (existingRutUser) return [null, createErrorMessage("rut", "Rut ya asociado a una cuenta")];
 
     const newUser = userRepository.create({
-      nombreCompleto,
-      email,
-      rut,
+      nombre_usuario,
+      email_usuario,
+      rut_usuario,
       password: await encryptPassword(user.password),
-      rol: "usuario",
+      rol,
     });
 
     await userRepository.save(newUser);

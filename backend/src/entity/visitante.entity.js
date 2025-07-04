@@ -10,15 +10,11 @@ const VisitanteSchema = new EntitySchema({
             primary: true,
             generated: true,
         },
-        rut_visitante_num: {
+        rut_visitante: {
             type: "varchar",
-            length: 8, // 7 or 8 digits
+            length: 10, // 7 or 8 digits
             nullable: false,
-        },
-        rut_visitante_dv: {
-            type: "char",
-            length: 1,
-            nullable: false,
+            unique: true
         },
         nombre_visitante: {
             type: "varchar",

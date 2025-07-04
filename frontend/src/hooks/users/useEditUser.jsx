@@ -16,19 +16,17 @@ const useEditUser = (setUsers) => {
     const handleUpdate = async (updatedUserData) => {
         if (updatedUserData) {
             try {
-            const updatedUser = await updateUser(updatedUserData, dataUser[0].rut);
+            const updatedUser = await updateUser(updatedUserData, dataUser[0].rut_usuario);
             showSuccessAlert('¡Actualizado!','El usuario ha sido actualizado correctamente.');
             setIsPopupOpen(false);
             const formattedUser = formatPostUpdate(updatedUser);
 
             setUsers(prevUsers => prevUsers.map(user => {
-                console.log("Usuario actual:", user);
-                if (user.id === formattedUser.id) {
-                    console.log("Reemplazando con:", formattedUser);
+                if (user.id_usuario === formattedUser.id_usuario) {
+                    return formattedUser;
                 }
-                return user.email === formattedUser.email ? formattedUser : user;
+                return user.email_usuario === formattedUser.email_usuario ? formattedUser : user;
             }));
-            
 
             setDataUser([]);
             } catch (error) {

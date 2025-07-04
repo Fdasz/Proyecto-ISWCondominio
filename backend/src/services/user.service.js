@@ -5,12 +5,16 @@ import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
 
 export async function getUserService(query) {
   try {
-    const { rut, id, email } = query;
+    const { rut_usuario, id_usuario, email_usuario } = query;
 
     const userRepository = AppDataSource.getRepository(User);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: [
+        { id_usuario: id_usuario },
+        { rut_usuario: rut_usuario },
+        { email_usuario: email_usuario }
+      ],
     });
 
     if (!userFound) return [null, "Usuario no encontrado"];
@@ -43,72 +47,98 @@ export async function getUsersService() {
 
 export async function updateUserService(query, body) {
   try {
-    const { id, rut, email } = query;
-
+    const { id_usuario, rut_usuario, email_usuario } = query;
     const userRepository = AppDataSource.getRepository(User);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: [
+        { id_usuario: id_usuario },
+        { rut_usuario: rut_usuario },
+        { email_usuario: email_usuario }
+      ],
     });
 
-    if (!userFound) return [null, "Usuario no encontrado"];
+    if (!userFound) {
+      return [null, "Usuario no encontrado"];
+    }
 
-    const existingUser = await userRepository.findOne({
-      where: [{ rut: body.rut }, { email: body.email }],
-    });
+    if (body.rut_usuario && body.rut_usuario !== userFound.rut_usuario) {
+      const existingRutUser = await userRepository.findOne({
+        where: { rut_usuario: body.rut_usuario }
+      });
+      
+      if (existingRutUser) {
+        return [null, "El RUT ingresado ya está en uso por otro usuario"];
+      }
+    }
 
-    if (existingUser && existingUser.id !== userFound.id) {
-      return [null, "Ya existe un usuario con el mismo rut o email"];
+    if (body.email_usuario && body.email_usuario !== userFound.email_usuario) {
+      const existingEmailUser = await userRepository.findOne({
+        where: { email_usuario: body.email_usuario }
+      });
+      
+      if (existingEmailUser) {
+        return [null, "El email ingresado ya está en uso por otro usuario"];
+      }
     }
 
     if (body.password) {
-      const matchPassword = await comparePassword(
+      const isPasswordValid = await comparePassword(
         body.password,
-        userFound.password,
+        userFound.password
       );
-
-      if (!matchPassword) return [null, "La contraseña no coincide"];
+      
+      if (!isPasswordValid) {
+        return [null, "La contraseña actual no es válida"];
+      }
     }
 
-    const dataUserUpdate = {
-      nombreCompleto: body.nombreCompleto,
-      rut: body.rut,
-      email: body.email,
-      rol: body.rol,
-      updatedAt: new Date(),
+    const updateData = {
+      nombre_usuario: body.nombre_usuario || userFound.nombre_usuario,
+      rut_usuario: body.rut_usuario || userFound.rut_usuario,
+      email_usuario: body.email_usuario || userFound.email_usuario,
+      rol: body.rol || userFound.rol,
+      updatedAt: new Date()
     };
 
     if (body.newPassword && body.newPassword.trim() !== "") {
-      dataUserUpdate.password = await encryptPassword(body.newPassword);
+      updateData.password = await encryptPassword(body.newPassword);
     }
 
-    await userRepository.update({ id: userFound.id }, dataUserUpdate);
+    await userRepository.update(
+      { id_usuario: userFound.id_usuario },
+      updateData
+    );
 
-    const userData = await userRepository.findOne({
-      where: { id: userFound.id },
+    const updatedUser = await userRepository.findOne({
+      where: { id_usuario: userFound.id_usuario },
+      select: ["id_usuario", "nombre_usuario", "rut_usuario", "email_usuario", "rol", "createdAt", "updatedAt"]
     });
 
-    if (!userData) {
-      return [null, "Usuario no encontrado después de actualizar"];
+    if (!updatedUser) {
+      return [null, "No se pudo recuperar el usuario actualizado"];
     }
 
-    const { password, ...userUpdated } = userData;
+    return [updatedUser, null];
 
-    return [userUpdated, null];
   } catch (error) {
-    console.error("Error al modificar un usuario:", error);
-    return [null, "Error interno del servidor"];
+    console.error("Error en updateUserService:", error);
+    return [null, "Error interno al procesar la actualización"];
   }
 }
 
 export async function deleteUserService(query) {
   try {
-    const { id, rut, email } = query;
+    const { id_usuario, rut_usuario, email_usuario } = query;
 
     const userRepository = AppDataSource.getRepository(User);
 
     const userFound = await userRepository.findOne({
-      where: [{ id: id }, { rut: rut }, { email: email }],
+      where: [
+        { id_usuario: id_usuario },
+        { rut_usuario: rut_usuario },
+        { email_usuario: email_usuario }
+      ],
     });
 
     if (!userFound) return [null, "Usuario no encontrado"];

@@ -24,8 +24,8 @@ export default function Popup({ show, setShow, data, action }) {
                         fields={[
                             {
                                 label: "Nombre completo",
-                                name: "nombreCompleto",
-                                defaultValue: userData.nombreCompleto || "",
+                                name: "nombre_usuario",
+                                defaultValue: userData.nombre_usuario || "",
                                 placeholder: 'Diego Alexis Salazar Jara',
                                 fieldType: 'input',
                                 type: "text",
@@ -37,8 +37,8 @@ export default function Popup({ show, setShow, data, action }) {
                             },
                             {
                                 label: "Correo electrónico",
-                                name: "email",
-                                defaultValue: userData.email || "",
+                                name: "email_usuario",
+                                defaultValue: userData.email_usuario || "",
                                 placeholder: 'example@gmail.cl',
                                 fieldType: 'input',
                                 type: "email",
@@ -48,8 +48,8 @@ export default function Popup({ show, setShow, data, action }) {
                             },
                             {
                                 label: "Rut",
-                                name: "rut",
-                                defaultValue: userData.rut || "",
+                                name: "rut_usuario",
+                                defaultValue: userData.rut_usuario || "",
                                 placeholder: '21.308.770-3',
                                 fieldType: 'input',
                                 type: "text",

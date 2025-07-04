@@ -34,10 +34,11 @@ const Users = () => {
     setDataUser(selectedUsers);
   }, [setDataUser]);
 
+  // Updated columns to match backend fields
   const columns = [
-    { title: "Nombre", field: "nombreCompleto", width: 350, responsive: 0 },
-    { title: "Correo electrónico", field: "email", width: 300, responsive: 3 },
-    { title: "Rut", field: "rut", width: 150, responsive: 2 },
+    { title: "Nombre", field: "nombre_usuario", width: 350, responsive: 0 },
+    { title: "Correo electrónico", field: "email_usuario", width: 300, responsive: 3 },
+    { title: "Rut", field: "rut_usuario", width: 150, responsive: 2 },
     { title: "Rol", field: "rol", width: 200, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
   ];
@@ -69,8 +70,8 @@ const Users = () => {
           data={users}
           columns={columns}
           filter={filterRut}
-          dataToFilter={'rut'}
-          initialSortName={'nombreCompleto'}
+          dataToFilter={'rut_usuario'}
+          initialSortName={'nombre_usuario'}
           onSelectionChange={handleSelectionChange}
         />
       </div>

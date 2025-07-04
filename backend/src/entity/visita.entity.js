@@ -5,29 +5,23 @@ const VisitaSchema = new EntitySchema({
   name: "Visita",
   tableName: "visita",
   columns: {
-    rut_visitante_num: {
+    id_visita: {
+      type: "int",
+      primary: true,
+      generated: true,
+    },
+    rut_visitante: {
       type: "varchar",
       length: 8,
-      primary: true,
+      nullable: false,
     },
-    rut_visitante_dv: {
-      type: "char",
-      length: 1,
-      primary: true,
-    },
-    rut_residente_num: {
+    rut_usuario: {
       type: "varchar",
-      length: 8,
-      primary: true,
-    },
-    rut_residente_dv: {
-      type: "char",
-      length: 1,
-      primary: true,
+      length: 12,
+      nullable: false,
     },
     fecha_visita: {
       type: "timestamp with time zone",
-      primary: true,
       default: () => "CURRENT_TIMESTAMP",
       nullable: false,
     },
@@ -46,19 +40,19 @@ const VisitaSchema = new EntitySchema({
     visitante: {
       target: "Visitante",
       type: "many-to-one",
-      joinColumns: [
-        { name: "rut_visitante_num", referencedColumnName: "rut_visitante_num" },
-        { name: "rut_visitante_dv", referencedColumnName: "rut_visitante_dv" }
-      ]
+      joinColumn: {
+        name: "rut_visitante",
+        referencedColumnName: "rut_visitante"
+      }
     },
-    residente: {
-      target: "Residente",
+    usuario: {
+      target: "User",
       type: "many-to-one",
-      joinColumns: [
-        { name: "rut_residente_num", referencedColumnName: "rut_residente_num" },
-        { name: "rut_residente_dv", referencedColumnName: "rut_residente_dv" }
-      ]
-    },
+      joinColumn: {
+        name: "rut_usuario",
+        referencedColumnName: "rut_usuario"
+      }
+    }
   },
 });
 

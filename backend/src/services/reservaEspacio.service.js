@@ -1,6 +1,6 @@
 import ReservaEspacio from "../entity/reservaEspacio.entity.js";
 import espacioComun from "../entity/espacioComun.entity.js";
-import Residente from "../entity/residente.entity.js";
+import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js"; 
 
 export async function createReservaEspacioService({
@@ -8,24 +8,20 @@ export async function createReservaEspacioService({
   hora_inicio,
   hora_fin,
   id_espacio,
-  rut_residente_num,
-  rut_residente_dv,
+  rut_usuario,
 }) {
   try {
     const reservaEspacioRepository = AppDataSource.getRepository(ReservaEspacio);
     const espacioComunRepository = AppDataSource.getRepository(espacioComun);
-    const residenteRepository = AppDataSource.getRepository(Residente);
+    const userRepository = AppDataSource.getRepository(User);
 
     // 1. Buscar el espacio
     const espacio = await espacioComunRepository.findOneBy({ id_espacio });
     if (!espacio) return [null, "No existe el espacio común"];
 
-    // 2. Buscar al residente
-    const residente = await residenteRepository.findOneBy({
-      rut_residente_num,
-      rut_residente_dv,
-    });
-    if (!residente) return [null, "No existe el residente"];
+    // 2. Buscar al usuario
+    const usuario = await userRepository.findOneBy({ rut_usuario });
+    if (!usuario) return [null, "No existe el usuario"];
 
     // 3. Crear la reserva
     const reservaEspacio = await reservaEspacioRepository.save({
@@ -33,7 +29,7 @@ export async function createReservaEspacioService({
       hora_inicio,
       hora_fin,
       espacio,
-      residente, // Se pasa la relación, no solo el RUT
+      usuario,
     });
 
     return [reservaEspacio, null];
@@ -54,8 +50,7 @@ export async function getReservasEspacioService(filters) {
       "fecha_reserva",
       "hora_inicio",
       "hora_fin",
-      "rut_residente_num",
-      "rut_residente_dv"
+      "rut_usuario" 
     ]) {
       if (filters[key]) where[key] = filters[key];
     }
@@ -66,7 +61,7 @@ export async function getReservasEspacioService(filters) {
 
     const reservasEspacio = await reservaEspacioRepository.find({
       where,
-      relations: ["espacio"], // si necesitas info del espacio
+      relations: ["espacio", "usuario"],
     });
 
     if (!reservasEspacio.length) return [null, "No hay reservas que coincidan"];

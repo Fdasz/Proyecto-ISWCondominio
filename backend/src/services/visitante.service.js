@@ -3,14 +3,14 @@ import { AppDataSource } from "../config/configDb.js";
 
 export async function getVisitanteService(query) {
     try {
-        const { rut_num, rut_dv, id, nombre } = query;
+        const { rut_visitante, id, nombre } = query;
 
         const visitanteRepository = AppDataSource.getRepository(Visitante);
 
         const visitanteFound = await visitanteRepository.findOne({
             where: [
                 id ? { id_visitante: id } : undefined,
-                (rut_num && rut_dv) ? { rut_visitante_num: rut_num, rut_visitante_dv: rut_dv } : undefined,
+                rut_visitante ? { rut_visitante } : undefined,
                 nombre ? { nombre_visitante: nombre } : undefined
             ].filter(Boolean),
         });
@@ -41,14 +41,14 @@ export async function getVisitantesService() {
 
 export async function updateVisitanteService(query, body) {
     try {
-        const { id, rut_num, rut_dv } = query;
+        const { id, rut_visitante } = query;
 
         const visitanteRepository = AppDataSource.getRepository(Visitante);
 
         const visitanteFound = await visitanteRepository.findOne({
             where: [
                 id ? { id_visitante: id } : undefined,
-                (rut_num && rut_dv) ? { rut_visitante_num: rut_num, rut_visitante_dv: rut_dv } : undefined
+                rut_visitante ? { rut_visitante } : undefined
             ].filter(Boolean),
         });
 
@@ -56,8 +56,7 @@ export async function updateVisitanteService(query, body) {
 
         const existingVisitante = await visitanteRepository.findOne({
             where: {
-                rut_visitante_num: body.rut_visitante_num,
-                rut_visitante_dv: body.rut_visitante_dv
+                rut_visitante: body.rut_visitante
             },
         });
 
@@ -82,8 +81,7 @@ export async function createVisitanteService(body) {
 
         const existingVisitante = await visitanteRepository.findOne({
             where: {
-                rut_visitante_num: body.rut_visitante_num,
-                rut_visitante_dv: body.rut_visitante_dv
+                rut_visitante: body.rut_visitante
             },
         });
 
@@ -102,14 +100,14 @@ export async function createVisitanteService(body) {
 
 export async function deleteVisitanteService(query) {
     try {
-        const { id, rut_num, rut_dv } = query;
+        const { id, rut_visitante } = query;
 
         const visitanteRepository = AppDataSource.getRepository(Visitante);
 
         const visitanteFound = await visitanteRepository.findOne({
             where: [
                 id ? { id_visitante: id } : undefined,
-                (rut_num && rut_dv) ? { rut_visitante_num: rut_num, rut_visitante_dv: rut_dv } : undefined
+                rut_visitante ? { rut_visitante } : undefined
             ].filter(Boolean),
         });
 

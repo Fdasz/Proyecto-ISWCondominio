@@ -18,11 +18,10 @@ import {
 
 export async function getVisitante(req, res) {
     try {
-        const { rut_visitante_num, rut_visitante_dv, id_visitante, nombre_visitante } = req.query;
+        const { rut_visitante, id_visitante, nombre_visitante } = req.query;
 
         const { error } = visitanteQueryValidation.validate({
-            rut_visitante_num,
-            rut_visitante_dv,
+            rut_visitante,
             id_visitante,
             nombre_visitante
         });
@@ -30,8 +29,7 @@ export async function getVisitante(req, res) {
         if (error) return handleErrorClient(res, 400, error.message);
 
         const [visitante, errorVisitante] = await getVisitanteService({
-            rut_num: rut_visitante_num,
-            rut_dv: rut_visitante_dv,
+            rut_visitante,
             id: id_visitante,
             nombre: nombre_visitante,
         });
@@ -85,7 +83,7 @@ export async function updateVisitante(req, res) {
         if (bodyError) return handleErrorClient(res, 400, bodyError.message);
 
         const [visitante, errorVisitante] = await updateVisitanteService(
-            { id: id_visitante },
+            { id: id_visitante, rut_visitante: body.rut_visitante },
             body
         );
 
@@ -100,15 +98,14 @@ export async function updateVisitante(req, res) {
 export async function deleteVisitante(req, res) {
     try {
         const { id_visitante } = req.params;
-        const { rut_visitante_num, rut_visitante_dv } = req.query;
+        const { rut_visitante } = req.query;
 
-        const { error } = visitanteQueryValidation.validate({ id_visitante, rut_visitante_num, rut_visitante_dv });
+        const { error } = visitanteQueryValidation.validate({ id_visitante, rut_visitante });
         if (error) return handleErrorClient(res, 400, error.message);
 
         const [visitante, errorVisitante] = await deleteVisitanteService({
             id: id_visitante,
-            rut_num: rut_visitante_num,
-            rut_dv: rut_visitante_dv,
+            rut_visitante,
         });
 
         if (errorVisitante) return handleErrorClient(res, 404, errorVisitante);

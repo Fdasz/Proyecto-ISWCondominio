@@ -17,8 +17,8 @@ router.get("/", getVisitas);
 
 router.post("/", createVisita);
 
-router.patch("/:rut_visitante/:rut_residente/:fecha_visita", updateVisita);
+router.patch("/:id_visita", updateVisita);
 
-router.delete("/:rut_visitante/:rut_residente/:fecha_visita", deleteVisita);
+router.delete("/:id_visita", deleteVisita);
 
 export default router;

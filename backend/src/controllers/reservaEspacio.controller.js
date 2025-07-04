@@ -17,7 +17,7 @@ import {
 
 export async function getReservaEspacio(req, res) {
     try {
-        const { id_reserva, fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_residente_num, rut_residente_dv } = req.query;
+        const { id_reserva, fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_usuario } = req.query;
 
         const { error } = reservaEspacioQueryValidation.validate({
             id_reserva,
@@ -25,8 +25,7 @@ export async function getReservaEspacio(req, res) {
             hora_inicio,
             hora_fin,
             id_espacio,
-            rut_residente_num,
-            rut_residente_dv
+            rut_usuario
         });
 
         if (error) return handleErrorClient(res, 400, error.message);
@@ -37,8 +36,7 @@ export async function getReservaEspacio(req, res) {
             hora_inicio,
             hora_fin,
             id_espacio,
-            rut_residente_num,
-            rut_residente_dv
+            rut_usuario
         });
 
         if (errorReservasEspacio) return handleErrorClient(res, 404, errorReservasEspacio);
@@ -53,15 +51,14 @@ export async function getReservaEspacio(req, res) {
 
 export async function createReservaEspacio(req, res) {
     try {
-        const { fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_residente_num, rut_residente_dv } = req.body;
+        const { fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_usuario } = req.body;
 
         const { error } = reservaEspacioBodyValidation.validate({
             fecha_reserva,
             hora_inicio,
             hora_fin,
             id_espacio,
-            rut_residente_num,
-            rut_residente_dv
+            rut_usuario
         });
 
         if (error) return handleErrorClient(res, 400, error.message);
@@ -78,7 +75,7 @@ export async function createReservaEspacio(req, res) {
 export async function updateReservaEspacio(req, res) {
     try {
         const { id_reserva } = req.params;
-        const { fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_residente_num, rut_residente_dv } = req.body;
+        const { fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_usuario } = req.body;
 
         const { error } = reservaEspacioBodyValidation.validate({
             id_reserva,
@@ -86,8 +83,7 @@ export async function updateReservaEspacio(req, res) {
             hora_inicio,
             hora_fin,
             id_espacio,
-            rut_residente_num,
-            rut_residente_dv
+            rut_usuario
         });
 
         if (error) return handleErrorClient(res, 400, error.message);

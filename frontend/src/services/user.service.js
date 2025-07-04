@@ -11,20 +11,18 @@ export async function getUsers() {
     }
 }
 
-export async function updateUser(data, rut) {
+export async function updateUser(data, rut_usuario) {
     try {
-        const response = await axios.patch(`/user/detail/?rut=${rut}`, data);
-        console.log(response);
+        const response = await axios.patch(`/user/detail/?rut_usuario=${rut_usuario}`, data);
         return response.data.data;
     } catch (error) {
-        console.log(error);
         return error.response.data;
     }
 }
 
-export async function deleteUser(rut) {
+export async function deleteUser(rut_usuario) {
     try {
-        const response = await axios.delete(`/user/detail/?rut=${rut}`);
+        const response = await axios.delete(`/user/detail/?rut_usuario=${rut_usuario}`);
         return response.data;
     } catch (error) {
         return error.response.data;
