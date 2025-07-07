@@ -116,15 +116,13 @@ const Visits = () => {
   ];
 
   return (
-    <main className="container">
-      <div className='visitas-register-container'> 
-        <Form
-          title="Registrar Visita"
-          fields={visitFields}
-          buttonText="Registrar"
-          onSubmit={handleFormSubmit}
-        />
-      </div>
+    <main className="page-container">
+      <Form
+        title="Registrar Visita"
+        fields={visitFields}
+        buttonText="Registrar"
+        onSubmit={handleFormSubmit}
+      />
 
       <PersonSearchModal
         isOpen={isModalOpen}

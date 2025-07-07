@@ -56,15 +56,13 @@ const Visitante = () => {
   ];
 
   return (
-    <main className="container">
-      <div className='visitas-register-container'> 
-        <Form
-          title="Registrar Nuevo Visitante"
-          fields={visitanteFields}
-          buttonText="Registrar Visitante"
-          onSubmit={handleFormSubmit}
-        />
-      </div>
+    <main className="page-container">
+      <Form
+        title="Registrar Nuevo Visitante"
+        fields={visitanteFields}
+        buttonText="Registrar Visitante"
+        onSubmit={handleFormSubmit}
+      />
     </main>
   );
 };

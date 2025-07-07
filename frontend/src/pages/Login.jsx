@@ -27,7 +27,7 @@ const Login = () => {
     };
 
     return (
-        <main className="container">
+        <main className="page-container">
             <Form
                 title="Iniciar sesión"
                 fields={[

@@ -26,9 +26,8 @@
 
 .visitas-search-container {
   display: flex;
-  /* FIX: Stack the form and results vertically instead of side-by-side */
   flex-direction: column;
-  align-items: center; /* Center the content horizontally */
+  align-items: center; 
   gap: 2rem;
   width: 100%;
   max-width: 1200px;
@@ -43,7 +42,7 @@
 .visitas-search-container .form-container {
   flex: 1;
   max-width: 450px;
-  margin: 0; /* Reset margin from default form styles */
+  margin: 0; 
 }
 
 .results-container {
@@ -86,49 +85,39 @@
 }
 
 .results-container p {
-  color: #333; /* Use a dark color for readability on a white background */
+  color: #333; 
   font-size: 1.1rem;
   text-align: center;
 }
 
-/* Main container for the entire "Search Visitas" page.
-  This adds the necessary padding to push content below the fixed navbar.
-*/
 .visitas-search-page-container {
   width: 100%;
   min-height: 100vh;
-  /* FIX: Add top padding to avoid being covered by the navbar */
   padding: calc(9vh + 2rem) 2rem;
   box-sizing: border-box;
   display: flex;
   justify-content: center;
 }
 
-/* 
-  Wrapper for the form and results.
-  This will stack them vertically.
-*/
+
 .visitas-search-content {
   width: 100%;
-  max-width: 900px; /* Adjust max-width as needed */
+  max-width: 900px; 
   display: flex;
-  /* FIX: Change flex-direction to stack items vertically */
   flex-direction: column;
   align-items: center;
-  gap: 2rem; /* Adds space between the form and the results */
+  gap: 2rem; 
 }
 
-/* Styling for the form container within this page */
 .visitas-search-content .form-container {
   width: 100%;
   background-color: #ffffff;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 0; /* Reset any default margins */
+  margin: 0; 
 }
 
-/* Responsive layout for smaller screens */
 @media (max-width: 992px) {
     .visitas-search-container {
         flex-direction: column;

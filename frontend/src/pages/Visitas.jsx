@@ -38,7 +38,7 @@ function Visitas() {
   ];
 
   return (
-    <main className="container">
+    <main className="page-container">
       <div className='visitas-search-container'>
         
         <Form

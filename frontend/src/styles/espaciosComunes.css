@@ -47,3 +47,7 @@
 .estado.inactivo {
     color: red;
 }
+
+.no-results {
+    color:white;
+}

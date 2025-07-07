@@ -51,6 +51,17 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
+                    {userRole === 'administrador' && (
+                    <li>
+                        <NavLink 
+                            to="/espaciosComunes" 
+                            onClick={() => setMenuOpen(false)} 
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                            Espacios Comunes
+                        </NavLink>
+                    </li>
+                    )}
                     {(userRole === 'administrador' || userRole === 'portero') && (
                         <li className="dropdown">
                             <a href="#!" className={`dropbtn ${isVisitasActive ? 'active' : ''}`}>Visitas</a>
