@@ -75,6 +75,15 @@ const Navbar = () => {
                     </li>
                     <li>
                         <NavLink 
+                            to="/espaciosComunes" 
+                            onClick={() => setMenuOpen(false)} 
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                            Espacios Comunes
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
                             to="/auth" 
                             onClick={() => { 
                                 logoutSubmit(); 
