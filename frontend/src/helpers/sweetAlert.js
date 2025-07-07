@@ -12,18 +12,20 @@ export async function deleteDataAlert() {
   })
 }
 
-export const showSuccessAlert = (titleMessage, message) => {
-  Swal.fire(
-    titleMessage,
-    message,
-    'success'
-  );
+export const showSuccessAlert = (title, text) => {
+    Swal.fire({
+        title,
+        text,
+        icon: 'success',
+        confirmButtonText: 'Aceptar'
+    });
 };
 
-export const showErrorAlert = (titleMessage, message) => {
-  Swal.fire(
-    titleMessage,
-    message,
-    'error'
-  );
+export const showErrorAlert = (title, text) => {
+    Swal.fire({
+        title,
+        text,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+    });
 };

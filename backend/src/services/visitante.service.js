@@ -1,27 +1,46 @@
+"use strict";
 import Visitante from "../entity/visitante.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { ILike } from "typeorm";
 
 export async function getVisitanteService(query) {
-    try {
-        const { rut_visitante, id, nombre } = query;
+  try {
+    const { rut_visitante, id_visitante, nombre_visitante } = query;
+    const visitanteRepository = AppDataSource.getRepository(Visitante);
 
-        const visitanteRepository = AppDataSource.getRepository(Visitante);
-
-        const visitanteFound = await visitanteRepository.findOne({
-            where: [
-                id ? { id_visitante: id } : undefined,
-                rut_visitante ? { rut_visitante } : undefined,
-                nombre ? { nombre_visitante: nombre } : undefined
-            ].filter(Boolean),
-        });
-
-        if (!visitanteFound) return [null, "Visitante no encontrado"];
-
-        return [visitanteFound, null];
-    } catch (error) {
-        console.error("Error al obtener el visitante:", error);
-        return [null, "Error interno del servidor"];
+    const whereConditions = [];
+    if (id_visitante) {
+      whereConditions.push({ id_visitante: id_visitante });
     }
+    if (rut_visitante) {
+      whereConditions.push({ rut_visitante: rut_visitante });
+    }
+    if (nombre_visitante) {
+      whereConditions.push({ nombre_visitante: ILike(`%${nombre_visitante}%`) });
+    }
+
+    if (whereConditions.length === 0) {
+      return [null, "Debe proporcionar al menos un parámetro de búsqueda"];
+    }
+
+    if (nombre_visitante) {
+        const visitantesFound = await visitanteRepository.find({
+            where: whereConditions,
+        });
+        if (!visitantesFound || visitantesFound.length === 0) return [null, "Visitante no encontrado"];
+        return [visitantesFound, null];
+    } else {
+        const visitanteFound = await visitanteRepository.findOne({
+            where: whereConditions,
+        });
+        if (!visitanteFound) return [null, "Visitante no encontrado"];
+        return [visitanteFound, null];
+    }
+
+  } catch (error) {
+    console.error("Error al obtener el visitante:", error);
+    return [null, "Error interno del servidor"];
+  }
 }
 
 export async function getVisitantesService() {
@@ -76,26 +95,31 @@ export async function updateVisitanteService(query, body) {
 }
 
 export async function createVisitanteService(body) {
-    try {
-        const visitanteRepository = AppDataSource.getRepository(Visitante);
+  try {
+    const visitanteRepository = AppDataSource.getRepository(Visitante);
+    const { rut_visitante, nombre_visitante, patente_visitante } = body;
 
-        const existingVisitante = await visitanteRepository.findOne({
-            where: {
-                rut_visitante: body.rut_visitante
-            },
-        });
+    const existingRut = await visitanteRepository.findOne({
+      where: { rut_visitante: rut_visitante },
+    });
 
-        if (existingVisitante) return [null, "El rut ya está registrado"];
-
-        const newVisitante = visitanteRepository.create(body);
-
-        await visitanteRepository.save(newVisitante);
-
-        return [newVisitante, null];
-    } catch (error) {
-        console.error("Error al crear el visitante:", error);
-        return [null, "Error interno del servidor"];
+    if (existingRut) {
+      return [null, "El rut ya está registrado"];
     }
+
+    const newVisitante = visitanteRepository.create({
+      rut_visitante,
+      nombre_visitante,
+      patente_visitante,
+    });
+
+    await visitanteRepository.save(newVisitante);
+
+    return [newVisitante, null];
+  } catch (error) {
+    console.error("Error al crear el visitante:", error);
+    return [null, "Error interno del servidor"];
+  }
 }
 
 export async function deleteVisitanteService(query) {

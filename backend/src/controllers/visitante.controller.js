@@ -30,13 +30,13 @@ export async function getVisitante(req, res) {
 
         const [visitante, errorVisitante] = await getVisitanteService({
             rut_visitante,
-            id: id_visitante,
-            nombre: nombre_visitante,
+            id_visitante,
+            nombre_visitante,
         });
 
         if (errorVisitante) return handleErrorClient(res, 404, errorVisitante);
 
-        handleSuccess(res, 200, "Visitante encontrado", visitante);
+        handleSuccess(res, 200, "Visitante(s) encontrado(s)", visitante);
     } catch (error) {
         handleErrorServer(res, 500, error.message);
     }
@@ -73,7 +73,6 @@ export async function createVisitante(req, res) {
     }
 }
 
-// Update visitante
 export async function updateVisitante(req, res) {
     try {
         const { id_visitante } = req.params;

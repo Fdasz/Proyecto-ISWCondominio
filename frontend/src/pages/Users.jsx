@@ -6,13 +6,14 @@ import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import '@styles/users.css';
 import useEditUser from '@hooks/users/useEditUser';
 import useDeleteUser from '@hooks/users/useDeleteUser';
 
 const Users = () => {
   const { users, fetchUsers, setUsers } = useUsers();
+  const [isLoading, setIsLoading] = useState(true);
   const [filterRut, setFilterRut] = useState('');
 
   const {
@@ -34,7 +35,14 @@ const Users = () => {
     setDataUser(selectedUsers);
   }, [setDataUser]);
 
-  // Updated columns to match backend fields
+  useEffect(() => {
+    const loadData = async () => {
+      await fetchUsers();
+      setIsLoading(false);
+    };
+    loadData();
+  }, []);
+
   const columns = [
     { title: "Nombre", field: "nombre_usuario", width: 350, responsive: 0 },
     { title: "Correo electrónico", field: "email_usuario", width: 300, responsive: 3 },
@@ -42,6 +50,10 @@ const Users = () => {
     { title: "Rol", field: "rol", width: 200, responsive: 2 },
     { title: "Creado", field: "createdAt", width: 200, responsive: 2 }
   ];
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className='main-container'>
@@ -66,14 +78,16 @@ const Users = () => {
             </button>
           </div>
         </div>
-        <Table
-          data={users}
-          columns={columns}
-          filter={filterRut}
-          dataToFilter={'rut_usuario'}
-          initialSortName={'nombre_usuario'}
-          onSelectionChange={handleSelectionChange}
-        />
+        {users && users.length > 0 && (
+          <Table
+            data={users}
+            columns={columns}
+            filter={filterRut}
+            dataToFilter={'rut_usuario'}
+            initialSortName={'nombre_usuario'}
+            onSelectionChange={handleSelectionChange}
+          />
+        )}
       </div>
       <Popup show={isPopupOpen} setShow={setIsPopupOpen} data={dataUser} action={handleUpdate} />
     </div>

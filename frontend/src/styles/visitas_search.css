@@ -1,0 +1,71 @@
+/* This is the main container for the entire page */
+.visitas-search-page {
+  background-color: #e6f2ff; /* The light blue background from your target image */
+  padding: 2rem;
+  min-height: calc(100vh - 60px); /* Fill the screen height below the navbar */
+}
+
+/* This container will hold the form and the results table, and center them */
+.visitas-content-wrapper {
+  max-width: 1100px;
+  margin: 0 auto; /* Center the wrapper on the page */
+}
+
+/* Style for the title "Búsqueda de Visitas" */
+.visitas-search-title {
+  color: #003366;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* This specifically targets the <Form> component on this page */
+.visitas-search-page .form-container {
+  background-color: #ffffff; /* The white card background */
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* This is the main wrapper for the search page content. */
+.visitas-search-container {
+  width: 100%;
+  /* FIX: Increased max-width to make the container and table wider */
+  max-width: 1200px; 
+  margin: 0 auto;
+  padding: 2rem 1rem; /* Add some padding */
+}
+
+/* Style the main title to be white and visible against the dark background. */
+.visitas-search-container .page-title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* 
+  Your <Form> component is already styled by form.css to be a white card.
+  We just add some margin below it.
+*/
+.visitas-search-container .form {
+  margin-bottom: 2rem;
+}
+
+/* Style the container for the results table to also be a white card. */
+.results-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.results-container .error-message {
+  color: #D8000C;
+  background-color: #FFD2D2;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}

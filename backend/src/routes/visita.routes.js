@@ -5,7 +5,7 @@ import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
     createVisita,
     deleteVisita,
-    getVisitas,
+    searchVisitas,
     updateVisita,
 } from "../controllers/visita.controller.js";
 
@@ -13,7 +13,7 @@ const router = Router();
 
 router.use(authenticateJwt).use(isAdmin);
 
-router.get("/", getVisitas);
+router.get("/search", searchVisitas);
 
 router.post("/", createVisita);
 

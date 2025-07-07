@@ -12,7 +12,7 @@ const VisitaSchema = new EntitySchema({
     },
     rut_visitante: {
       type: "varchar",
-      length: 8,
+      length: 12,
       nullable: false,
     },
     rut_usuario: {
@@ -30,7 +30,7 @@ const VisitaSchema = new EntitySchema({
       length: 60,
       nullable: false,
     },
-    nombre_residente: {
+    nombre_usuario: {
       type: "varchar",
       length: 60,
       nullable: false,

@@ -28,3 +28,26 @@ export async function deleteUser(rut_usuario) {
         return error.response.data;
     }
 }
+
+export async function getUser(params) {
+    try {
+        console.log('getUser service received params:', params);
+
+        if (!params || Object.keys(params).length === 0) {
+            return {
+                status: 'Error',
+                message: 'Se requieren parámetros de búsqueda'
+            };
+        }
+
+        const response = await axios.get('/user/detail', { params });
+        return response.data;
+
+    } catch (error) {
+        console.error('Error in getUser:', error);
+        return {
+            status: 'Error',
+            message: error.response?.data?.message || 'Error al buscar usuario'
+        };
+    }
+}

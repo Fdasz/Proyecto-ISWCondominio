@@ -16,3 +16,6 @@ body {
 	min-height: 100vh;
 	margin: 0 auto;
 }
+:root {
+    --navbar-height: 60px;
+}

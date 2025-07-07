@@ -1,64 +1,91 @@
+"use strict";
 import Visita from "../entity/visita.entity.js";
 import { AppDataSource } from "../config/configDb.js";
+import { Between, ILike } from "typeorm";
 
+export async function searchVisitasService(queryParams) {
+  try {
+    const {
+      rut_visitante,
+      rut_usuario,
+      nombre_visitante,
+      nombre_usuario,
+      patente_visitante,
+      startDate,
+      endDate,
+    } = queryParams;
 
-// Buscar visitas con filtros
-export async function searchVisitasService({
-    startDate,
-    endDate,
-    nombre_visitante,
-    nombre_residente,
-    rut_visitante,
-    rut_usuario
-}) {
-    try {
-        const visitaRepository = AppDataSource.getRepository(Visita);
+    const query = AppDataSource.getRepository(Visita)
+      .createQueryBuilder("visita")
+      .leftJoinAndSelect("visita.usuario", "usuario")
+      .leftJoinAndSelect("visita.visitante", "visitante");
 
-        const where = {};
-
-        if (startDate && endDate) {
-            where.fecha_visita = { $gte: startDate, $lte: endDate };
-        }
-        if (rut_visitante) {
-            where.rut_visitante = rut_visitante;
-        }
-        if (rut_usuario) {
-            where.rut_usuario = rut_usuario;
-        }
-        if (nombre_visitante) {
-            where.nombre_visitante = nombre_visitante;
-        }
-        if (nombre_residente) {
-            where.nombre_residente = nombre_residente;
-        }
-
-        const visitas = await visitaRepository.find({ where });
-
-        if (!visitas || visitas.length === 0) return [[], "No hay visitas encontradas"];
-
-        return [visitas, null];
-    } catch (error) {
-        console.error("Error al buscar visitas:", error);
-        return [null, "Error interno del servidor"];
+    if (rut_visitante) {
+      query.andWhere("visita.rut_visitante = :rut_visitante", { rut_visitante });
     }
+    if (rut_usuario) {
+      query.andWhere("visita.rut_usuario = :rut_usuario", { rut_usuario });
+    }
+    if (nombre_visitante) {
+      query.andWhere("visita.nombre_visitante ILIKE :nombre_visitante", {
+        nombre_visitante: `%${nombre_visitante}%`,
+      });
+    }
+    if (nombre_usuario) {
+      query.andWhere("visita.nombre_usuario ILIKE :nombre_usuario", {
+        nombre_usuario: `%${nombre_usuario}%`,
+      });
+    }
+    // Search on the related 'visitante' entity for the patent
+    if (patente_visitante) {
+      query.andWhere("visitante.patente_visitante ILIKE :patente_visitante", {
+        patente_visitante: `%${patente_visitante}%`,
+      });
+    }
+    if (startDate && endDate) {
+      query.andWhere("visita.fecha_visita BETWEEN :startDate AND :endDate", {
+        startDate,
+        endDate,
+      });
+    }
+
+    const visitas = await query.getMany();
+    return [visitas, null];
+  } catch (error) {
+    console.error("Error en el servicio de búsqueda de visitas:", error);
+    return [null, "Error interno del servidor al realizar la búsqueda."];
+  }
 }
 
-// Crear visita
 export async function createVisitaService(body) {
     try {
         const visitaRepository = AppDataSource.getRepository(Visita);
+        const {
+            rut_usuario,
+            rut_visitante,
+            nombre_usuario,
+            nombre_visitante,
+            patente_visitante,
+            fecha_visita,
+        } = body;
 
-        const newVisita = visitaRepository.create(body);
+        const newVisita = visitaRepository.create({
+            rut_usuario,
+            rut_visitante,
+            nombre_usuario,
+            nombre_visitante,
+            patente_visitante,
+            fecha_visita,
+        });
+
         await visitaRepository.save(newVisita);
-
         return [newVisita, null];
     } catch (error) {
         console.error("Error al crear la visita:", error);
-        return [null, "Error interno del servidor"];
+        return [null, error.message || "Error interno del servidor al crear la visita."];
     }
 }
 
-// Actualizar visita
 export async function updateVisitaService(query, body) {
     try {
         const { id_visita } = query;
@@ -70,10 +97,11 @@ export async function updateVisitaService(query, body) {
 
         if (!visitaFound) return [null, "Visita no encontrada"];
 
-        const updatedVisita = { ...visitaFound, ...body };
-        await visitaRepository.save(updatedVisita);
+        // FIX: The mapping logic is no longer needed. The body fields match the entity.
+        visitaRepository.merge(visitaFound, body);
+        await visitaRepository.save(visitaFound);
 
-        return [updatedVisita, null];
+        return [visitaFound, null];
     } catch (error) {
         console.error("Error al actualizar la visita:", error);
         return [null, "Error interno del servidor"];

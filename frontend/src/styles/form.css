@@ -180,11 +180,18 @@
 }
 
 .container {
-	height: 100vh;	
-	background: linear-gradient(90deg, #003366, #001a33); /*Color principal para login (gradiente)*/
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #002651 0%, #003366 100%);
+
+  /* FIX: Add padding to push content down from under the fixed navbar */
+  padding-top: 9vh;
+
+  /* Ensures padding is calculated as part of the element's total height */
+  box-sizing: border-box;
 }
 
 input[type='email'] {

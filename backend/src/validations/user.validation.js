@@ -44,18 +44,28 @@ export const userQueryValidation = Joi.object({
       "string.pattern.base":
         "Formato rut inválido, debe ser xx.xxx.xxx-x o xxxxxxxx-x.",
     }),
+  nombre_usuario: Joi.string()
+    .min(1)
+    .max(255)
+    .pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+    .messages({
+      "string.base": "El nombre debe ser de tipo string.",
+      "string.min": "El nombre de búsqueda debe tener como mínimo 1 caracter.",
+      "string.max": "El nombre de búsqueda debe tener como máximo 50 caracteres.",
+      "string.pattern.base": "El nombre solo puede contener letras y espacios.",
+    }),
   rol: Joi.string().min(4).max(15).messages({
     "string.base": "El rol debe ser de tipo string.",
     "string.min": "El rol debe tener como mínimo 4 caracteres.",
     "string.max": "El rol debe tener como máximo 15 caracteres.",
   }),
 })
-  .or("id_usuario", "email_usuario", "rut_usuario")
+  .or("id_usuario", "email_usuario", "rut_usuario", "nombre_usuario")
   .unknown(false)
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing":
-      "Debes proporcionar al menos un parámetro: id_usuario, email_usuario o rut_usuario.",
+      "Debes proporcionar al menos un parámetro: id_usuario, email_usuario, rut_usuario o nombre_usuario.",
   });
 
 export const userBodyValidation = Joi.object({

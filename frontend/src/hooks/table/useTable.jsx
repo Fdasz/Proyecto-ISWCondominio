@@ -8,8 +8,11 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
     const [table, setTable] = useState(null);
     const [isTableBuilt, setIsTableBuilt] = useState(false);
 
+    // Initialize table
     useEffect(() => {
-        if (tableRef.current) {
+        let tabulatorTable = null;
+
+        if (tableRef.current && data) {  // Only initialize if we have both ref and data
             const updatedColumns = [
                 { 
                     formatter: "rowSelection", 
@@ -22,8 +25,9 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
                 },
                 ...columns
             ];
-            const tabulatorTable = new Tabulator(tableRef.current, {
-                data: [],
+
+            tabulatorTable = new Tabulator(tableRef.current, {
+                data: data, // Initialize with data immediately
                 columns: updatedColumns,
                 layout: "fitColumns",
                 responsiveLayout: "collapse",
@@ -45,40 +49,48 @@ function useTable({ data, columns, filter, dataToFilter, initialSortName, onSele
                     { column: initialSortName, dir: "asc" }
                 ],
             });
+
+            // Set up event listeners
             tabulatorTable.on("rowSelectionChanged", function(selectedData) {
                 if (onSelectionChange) {
                     onSelectionChange(selectedData);
                 }
             });
+
             tabulatorTable.on("tableBuilt", function() {
                 setIsTableBuilt(true);
             });
+
             setTable(tabulatorTable);
-            return () => {
+        }
+
+        // Cleanup
+        return () => {
+            if (tabulatorTable) {
                 tabulatorTable.destroy();
                 setIsTableBuilt(false);
                 setTable(null);
-            };
-        }
-    }, []);
-
-    useEffect(() => {
-        if (table && isTableBuilt) {
-            table.replaceData(data);
-        }
-    }, [data, table, isTableBuilt]);
-
-    useEffect(() => {
-        if (table && isTableBuilt) {
-            if (filter) {
-                table.setFilter(dataToFilter, "like", filter);
-            } else {
-                table.clearFilter();
             }
-            table.redraw();
+        };
+    }, [data]); // Re-initialize when data changes
+
+    // Handle filter changes
+    useEffect(() => {
+        if (table && isTableBuilt) {
+            try {
+                if (filter) {
+                    table.setFilter(dataToFilter, "like", filter);
+                } else {
+                    table.clearFilter();
+                }
+                table.redraw(true); // Force redraw
+            } catch (error) {
+                console.error('Error updating table filter:', error);
+            }
         }
-    }, [filter, table, dataToFilter, isTableBuilt]);
+    }, [filter, dataToFilter, table, isTableBuilt]);
 
     return { tableRef };
 }
+
 export default useTable;

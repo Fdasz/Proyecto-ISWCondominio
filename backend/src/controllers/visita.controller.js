@@ -7,7 +7,7 @@ import {
 } from "../services/visita.service.js";
 import {
     visitaBodyValidation,
-    visitaQueryValidation
+    visitaQueryValidation,
 } from "../validations/visita.validation.js";
 import {
     handleErrorClient,
@@ -15,48 +15,28 @@ import {
     handleSuccess
 } from "../handlers/responseHandlers.js";
 
-// Buscar visitas con filtros
-export async function getVisitas(req, res) {
+export async function searchVisitas(req, res) {
     try {
-        const {
-            startDate,
-            endDate,
-            nombre_visitante,
-            nombre_residente,
-            rut_visitante,
-            rut_usuario
-        } = req.query;
+        const { error } = visitaQueryValidation.validate(req.query);
+        if (error) {
+            return handleErrorClient(res, 400, error.message);
+        }
 
-        const { error } = visitaQueryValidation.validate({
-            startDate,
-            endDate,
-            nombre_visitante,
-            nombre_residente,
-            rut_visitante,
-            rut_usuario
-        });
-        if (error) return handleErrorClient(res, 400, error.message);
+        const [visitas, serviceError] = await searchVisitasService(req.query);
+        if (serviceError) {
+            return handleErrorServer(res, 500, serviceError);
+        }
 
-        const [visitas, errorVisitas] = await searchVisitasService({
-            startDate,
-            endDate,
-            nombre_visitante,
-            nombre_residente,
-            rut_visitante,
-            rut_usuario
-        });
-
-        if (errorVisitas) return handleErrorClient(res, 404, errorVisitas);
-
-        visitas.length === 0
-            ? handleSuccess(res, 204)
-            : handleSuccess(res, 200, "Visitas encontradas", visitas);
+        if (visitas.length === 0) {
+            return handleSuccess(res, 200, "No se encontraron visitas con los criterios de búsqueda.", []);
+        }
+        
+        handleSuccess(res, 200, "Búsqueda de visitas exitosa.", visitas);
     } catch (error) {
         handleErrorServer(res, 500, error.message);
     }
 }
 
-// Actualizar visita
 export async function updateVisita(req, res) {
     try {
         const { id_visita } = req.params;
@@ -80,7 +60,6 @@ export async function updateVisita(req, res) {
     }
 }
 
-// Eliminar visita
 export async function deleteVisita(req, res) {
     try {
         const { id_visita } = req.params;
@@ -97,7 +76,6 @@ export async function deleteVisita(req, res) {
     }
 }
 
-// Crear visita
 export async function createVisita(req, res) {
     try {
         const { body } = req;

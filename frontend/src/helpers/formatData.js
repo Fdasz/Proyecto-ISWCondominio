@@ -5,9 +5,9 @@ import { format as formatTempo } from "@formkit/tempo";
 export function formatUserData(user) {
     return {
         ...user,
-        nombreCompleto: startCase(user.nombreCompleto),
+        nombre_usuario: startCase(user.nombre_usuario),
         rol: startCase(user.rol),
-        rut: formatRut(user.rut),
+        rut: formatRut(user.rut_usuario),
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
@@ -23,10 +23,10 @@ export function convertirMinusculas(obj) {
 
 export function formatPostUpdate(user) {
     return {
-        nombreCompleto: startCase(user.nombreCompleto),
+        nombre_usuario: startCase(user.nombre_usuario),
         rol: startCase(user.rol),
-        rut: formatRut(user.rut),
-        email: user.email,
+        rut_usuario: formatRut(user.rut_usuario),
+        email_usuario: user.email_usuario,
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }

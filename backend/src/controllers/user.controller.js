@@ -17,13 +17,16 @@ import {
 
 export async function getUser(req, res) {
   try {
-    const { rut_usuario, id_usuario, email_usuario } = req.query;
+    // Destructure ALL possible query parameters, including nombre_usuario
+    const { rut_usuario, id_usuario, email_usuario, nombre_usuario } = req.query;
 
-    const { error } = userQueryValidation.validate({ rut_usuario, id_usuario, email_usuario });
+    // Validate ALL the received parameters
+    const { error } = userQueryValidation.validate({ rut_usuario, id_usuario, email_usuario, nombre_usuario });
 
     if (error) return handleErrorClient(res, 400, error.message);
 
-    const [user, errorUser] = await getUserService({ rut_usuario, id_usuario, email_usuario });
+    // Pass ALL parameters to the service
+    const [user, errorUser] = await getUserService({ rut_usuario, id_usuario, email_usuario, nombre_usuario });
 
     if (errorUser) return handleErrorClient(res, 404, errorUser);
 

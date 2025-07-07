@@ -2,28 +2,54 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
+import { ILike } from "typeorm"; // <-- Import ILike
 
 export async function getUserService(query) {
   try {
-    const { rut_usuario, id_usuario, email_usuario } = query;
-
+    const { rut_usuario, id_usuario, email_usuario, nombre_usuario } = query;
     const userRepository = AppDataSource.getRepository(User);
 
-    const userFound = await userRepository.findOne({
-      where: [
-        { id_usuario: id_usuario },
-        { rut_usuario: rut_usuario },
-        { email_usuario: email_usuario }
-      ],
-    });
+    // Build the where conditions dynamically
+    const whereConditions = [];
+    if (id_usuario) {
+      whereConditions.push({ id_usuario: id_usuario });
+    }
+    if (rut_usuario) {
+      whereConditions.push({ rut_usuario: rut_usuario });
+    }
+    if (email_usuario) {
+      whereConditions.push({ email_usuario: email_usuario });
+    }
+    if (nombre_usuario) {
+      // Use ILike for case-insensitive partial matching (e.g., 'juan' matches 'Juan Carlos')
+      whereConditions.push({ nombre_usuario: ILike(`%${nombre_usuario}%`) });
+    }
 
-    if (!userFound) return [null, "Usuario no encontrado"];
+    // If no valid search parameters are provided, return an error.
+    if (whereConditions.length === 0) {
+      return [null, "Debe proporcionar al menos un parámetro de búsqueda"];
+    }
 
-    const { password, ...userData } = userFound;
+    // If searching by name, we might get multiple results, so use find()
+    if (nombre_usuario) {
+        const usersFound = await userRepository.find({
+            where: whereConditions,
+            select: ["id_usuario", "nombre_usuario", "rut_usuario", "email_usuario", "rol"] // Exclude password
+        });
+        if (!usersFound || usersFound.length === 0) return [null, "Usuario no encontrado"];
+        return [usersFound, null];
+    } else {
+        // For other unique fields, we expect one result, so use findOne()
+        const userFound = await userRepository.findOne({
+            where: whereConditions,
+        });
+        if (!userFound) return [null, "Usuario no encontrado"];
+        const { password, ...userData } = userFound;
+        return [userData, null];
+    }
 
-    return [userData, null];
   } catch (error) {
-    console.error("Error obtener el usuario:", error);
+    console.error("Error al obtener el usuario:", error);
     return [null, "Error interno del servidor"];
   }
 }
