@@ -1,3 +1,4 @@
+"use strict";
 import espacioComun from "../entity/espacioComun.entity.js";
 import { AppDataSource } from "../config/configDb.js"; 
 
@@ -28,9 +29,12 @@ export async function getEspaciosComunesService({
             where.estado_espacio_comun = estado_espacio_comun;
         }
 
-        const espaciosComunes = await espacioComunRepository.find({ where });
-
-        if (!espaciosComunes || espaciosComunes.length === 0) return [null, "No hay espacios comunes que coincidan con los filtros"];
+        const espaciosComunes = Object.keys(where).length === 0
+            ? await espacioComunRepository.find()
+            : await espacioComunRepository.find({ where });
+        if (!espaciosComunes || espaciosComunes.length === 0) {
+            return [null, "No hay espacios comunes que coincidan con los filtros"];
+        }
 
         return [espaciosComunes, null];
     } catch (error) {
@@ -38,6 +42,7 @@ export async function getEspaciosComunesService({
         return [null, "Error interno del servidor"];
     }
 }
+
 
 export async function updateEspacioComunService(id_espacio, body) {
     try {
@@ -74,7 +79,7 @@ export async function createEspacioComunService(body) {
 
 export async function deleteEspacioComunService(id_espacio) {
   try {
-    const espacioComunRepository = AppDataSource.getRepository(espacioComun); // ✅ ESTO FALTABA
+    const espacioComunRepository = AppDataSource.getRepository(espacioComun); 
 
     const espacioComunEncontrado = await espacioComunRepository.findOneBy({ id_espacio });
 

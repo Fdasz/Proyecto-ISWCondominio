@@ -1,0 +1,49 @@
+.container {
+    padding: 2rem;
+}
+
+.espacios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.espacio-card {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.espacio-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.espacio-card.selected {
+    border: 2px solid #007bff;
+    background-color: #e7f3ff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transform: scale(1.02);
+}
+
+.espacio-card.selected:hover {
+    border: 2px solid #0056b3;
+    background-color: #d1ecf1;
+}
+
+.estado {
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.estado.activo {
+    color: green;
+}
+
+.estado.inactivo {
+    color: red;
+}

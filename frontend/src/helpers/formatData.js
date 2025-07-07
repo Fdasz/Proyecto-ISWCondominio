@@ -30,3 +30,12 @@ export function formatPostUpdate(user) {
         createdAt: formatTempo(user.createdAt, "DD-MM-YYYY")
     };
 }
+
+export function formatEspacioComunData(espacio) {
+    return {
+        ...espacio,
+        tipo_espacio_comun: startCase(espacio.tipo_espacio_comun),
+        descripcion_espacio_comun: startCase(espacio.descripcion_espacio_comun),
+        estado_espacio_comun: startCase(espacio.estado_espacio_comun)
+    };
+}
