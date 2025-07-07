@@ -25,7 +25,7 @@
     }
     
     .container {
-        padding: 0 10px;
+        padding: calc(9vh + 2rem) 10px 2rem; /* Adjusted padding for small screens */
     }
     
     .toggle-password-icon {
@@ -184,13 +184,9 @@
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background: linear-gradient(135deg, #002651 0%, #003366 100%);
-
-  /* FIX: Add padding to push content down from under the fixed navbar */
-  padding-top: 9vh;
-
-  /* Ensures padding is calculated as part of the element's total height */
+  padding-top: calc(9vh + 2rem); /* Match navbar height + add some space */
   box-sizing: border-box;
 }
 

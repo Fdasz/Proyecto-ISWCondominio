@@ -18,7 +18,7 @@ export const getVisitante = async (query) => {
 
 export async function createVisitante(visitanteData) {
   try {
-    const { data } = await axios.post('/visitante', visitanteData);
+    const { data } = await axios.post('/visitantes', visitanteData);
     return [data.data, null];
   } catch (error) {
     console.error('Error creating visitante:', error);

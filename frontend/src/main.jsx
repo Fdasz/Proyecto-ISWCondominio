@@ -13,6 +13,7 @@ import ProtectedRoute from '@components/ProtectedRoute';
 import '@styles/styles.css';
 import Visits from '@pages/Visits';
 import Visitas from '@pages/Visitas';
+import Visitante from '@pages/Visitante';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['administrador', 'portero']}>
             <Visitas />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'visitante/new',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'portero']}>
+            <Visitante />
           </ProtectedRoute>
         )
       },

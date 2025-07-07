@@ -7,6 +7,7 @@ import Form from '@components/Form';
 import { createVisita } from '@services/visita.service';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
 import '@styles/form.css';
+import '@styles/visits.css';
 
 const Visits = () => {
   const navigate = useNavigate();
@@ -67,6 +68,15 @@ const Visits = () => {
       onClick: () => openSearchModal('usuario')
     },
     {
+      label: "RUT Residente",
+      name: "rut_usuario",
+      placeholder: "RUT del residente...",
+      fieldType: 'input',
+      type: "text",
+      readOnly: true,
+      value: formData.rut_usuario
+    },
+    {
       label: "Visitante",
       name: "nombre_visitante",
       placeholder: "Click para buscar visitante...",
@@ -75,6 +85,15 @@ const Visits = () => {
       readOnly: true,
       value: formData.nombre_visitante,
       onClick: () => openSearchModal('visitante')
+    },
+    {
+      label: "RUT Visitante",
+      name: "rut_visitante",
+      placeholder: "RUT del visitante...",
+      fieldType: 'input',
+      type: "text",
+      readOnly: true,
+      value: formData.rut_visitante
     },
     {
       label: "Patente del Vehículo (Opcional)",
@@ -97,12 +116,14 @@ const Visits = () => {
 
   return (
     <main className="container">
-      <Form
-        title="Registrar Visita"
-        fields={visitFields}
-        buttonText="Registrar"
-        onSubmit={handleFormSubmit}
-      />
+      <div className='visitas-register-container'> 
+        <Form
+          title="Registrar Visita"
+          fields={visitFields}
+          buttonText="Registrar"
+          onSubmit={handleFormSubmit}
+        />
+      </div>
 
       <PersonSearchModal
         isOpen={isModalOpen}

@@ -18,11 +18,11 @@ function Visitas() {
   };
 
   const searchFields = [
-    { name: 'nombre_visitante', placeholder: 'Nombre Visitante', fieldType: 'input', type: 'text' },
-    { name: 'nombre_usuario', placeholder: 'Nombre Residente', fieldType: 'input', type: 'text' },
-    { name: 'rut_visitante', placeholder: 'RUT Visitante', fieldType: 'input', type: 'text' },
-    { name: 'rut_usuario', placeholder: 'RUT Residente', fieldType: 'input', type: 'text' },
-    { name: 'patente_visitante', placeholder: 'Patente', fieldType: 'input', type: 'text' },
+    { name: 'nombre_visitante', label: 'Nombre Visitante', placeholder: 'Ingrese nombre del visitante', fieldType: 'input', type: 'text' },
+    { name: 'nombre_usuario', label: 'Nombre Residente', placeholder: 'Ingrese nombre del residente', fieldType: 'input', type: 'text' },
+    { name: 'rut_visitante', label: 'RUT Visitante', placeholder: 'Ingrese RUT del visitante', fieldType: 'input', type: 'text' },
+    { name: 'rut_usuario', label: 'RUT Residente', placeholder: 'Ingrese RUT del residente', fieldType: 'input', type: 'text' },
+    { name: 'patente_visitante', label: 'Patente', placeholder: 'Ingrese patente', fieldType: 'input', type: 'text' },
     { name: 'startDate', label: 'Desde:', fieldType: 'input', type: 'date' },
     { name: 'endDate', label: 'Hasta:', fieldType: 'input', type: 'date' },
   ];
@@ -46,9 +46,9 @@ function Visitas() {
   return (
     <main className="container">
       <div className='visitas-search-container'>
-        <h1 className='page-title'>Búsqueda de Visitas</h1>
         
         <Form
+          title="Búsqueda de Visitas"
           fields={searchFields}
           buttonText="Buscar"
           onSubmit={handleSearch}

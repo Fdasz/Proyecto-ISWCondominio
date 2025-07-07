@@ -35,15 +35,7 @@
   max-width: 1200px; 
   margin: 0 auto;
   padding: 2rem 1rem; /* Add some padding */
-}
-
-/* Style the main title to be white and visible against the dark background. */
-.visitas-search-container .page-title {
-  color: #ffffff;
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 2rem;
+  padding-top: calc(9vh + 2rem); /* Add space for the navbar */
 }
 
 /* 
@@ -51,7 +43,8 @@
   We just add some margin below it.
 */
 .visitas-search-container .form {
-  margin-bottom: 2rem;
+  max-width: 600px; /* Adjust this value as needed */
+  margin: 0 auto 2rem auto; /* Center the form and keep bottom margin */
 }
 
 /* Style the container for the results table to also be a white card. */

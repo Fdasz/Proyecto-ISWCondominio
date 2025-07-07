@@ -48,11 +48,20 @@ const Navbar = () => {
                     )}
                     <li>
                         <NavLink 
+                            to="/visitante/new" 
+                            onClick={() => setMenuOpen(false)} 
+                            className={({ isActive }) => isActive ? 'active' : ''}
+                        >
+                            Reg. Visitante
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
                             to="/visits" 
                             onClick={() => setMenuOpen(false)} 
                             className={({ isActive }) => isActive ? 'active' : ''}
                         >
-                            Registrar Visita
+                            Reg. Visita
                         </NavLink>
                     </li>
                     <li>
@@ -61,7 +70,7 @@ const Navbar = () => {
                             onClick={() => setMenuOpen(false)} 
                             className={({ isActive }) => isActive ? 'active' : ''}
                         >
-                            Visitas
+                            Buscar Visitas
                         </NavLink>
                     </li>
                     <li>
