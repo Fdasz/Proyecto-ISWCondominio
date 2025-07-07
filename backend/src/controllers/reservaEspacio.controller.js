@@ -40,7 +40,6 @@ export async function getReservaEspacio(req, res) {
             rut_residente_num,
             rut_residente_dv
         });
-
         if (errorReservasEspacio) return handleErrorClient(res, 404, errorReservasEspacio);
 
         reservasEspacio.length === 0

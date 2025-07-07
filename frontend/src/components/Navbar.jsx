@@ -72,6 +72,34 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
+                    {userRole === 'administrador' && (
+                    <li>
+                        <NavLink 
+                            to="/espaciosComunes" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Espacios Comunes
+                        </NavLink>
+                    </li>
+                    )}
+                    {userRole === 'administrador' && (
+                    <li>
+                        <NavLink 
+                            to="/reservas" 
+                            onClick={() => { 
+                                setMenuOpen(false); 
+                                addActiveClass();
+                            }} 
+                            activeClassName="active"
+                        >
+                            Reservas
+                        </NavLink>
+                    </li>
+                    )}
                     <li>
                         <NavLink 
                             to="/auth" 

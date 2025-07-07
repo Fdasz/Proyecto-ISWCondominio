@@ -13,7 +13,7 @@ import useDeleteUser from '@hooks/users/useDeleteUser';
 
 const Users = () => {
   const { users, fetchUsers, setUsers } = useUsers();
-  const [filterRut, setFilterRut] = useState('');
+  const [filterRut, setFilterRut] = useState([]);
 
   const {
     handleClickUpdate,
