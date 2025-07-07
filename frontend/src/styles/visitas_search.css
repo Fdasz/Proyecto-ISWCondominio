@@ -1,17 +1,14 @@
-/* This is the main container for the entire page */
 .visitas-search-page {
-  background-color: #e6f2ff; /* The light blue background from your target image */
+  background-color: #e6f2ff; 
   padding: 2rem;
-  min-height: calc(100vh - 60px); /* Fill the screen height below the navbar */
+  min-height: calc(100vh - 60px);
 }
 
-/* This container will hold the form and the results table, and center them */
 .visitas-content-wrapper {
   max-width: 1100px;
-  margin: 0 auto; /* Center the wrapper on the page */
+  margin: 0 auto; 
 }
 
-/* Style for the title "Búsqueda de Visitas" */
 .visitas-search-title {
   color: #003366;
   font-size: 28px;
@@ -20,45 +17,132 @@
   text-align: center;
 }
 
-/* This specifically targets the <Form> component on this page */
 .visitas-search-page .form-container {
-  background-color: #ffffff; /* The white card background */
+  background-color: #ffffff; 
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* This is the main wrapper for the search page content. */
 .visitas-search-container {
+  display: flex;
+  /* FIX: Stack the form and results vertically instead of side-by-side */
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
+  gap: 2rem;
   width: 100%;
-  /* FIX: Increased max-width to make the container and table wider */
-  max-width: 1200px; 
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem; /* Add some padding */
-  padding-top: calc(9vh + 2rem); /* Add space for the navbar */
 }
 
-/* 
-  Your <Form> component is already styled by form.css to be a white card.
-  We just add some margin below it.
-*/
 .visitas-search-container .form {
-  max-width: 600px; /* Adjust this value as needed */
-  margin: 0 auto 2rem auto; /* Center the form and keep bottom margin */
+  max-width: 600px; 
+  margin: 0 auto 2rem auto; 
 }
 
-/* Style the container for the results table to also be a white card. */
+.visitas-search-container .form-container {
+  flex: 1;
+  max-width: 450px;
+  margin: 0; /* Reset margin from default form styles */
+}
+
 .results-container {
+  width: 100%;
   background-color: #ffffff;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.results-container .tabulator-footer {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 10px; 
+  width: 100%;
+}
+
+.action-button-main {
+  background-color: #003366;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease;
+}
+
+.action-button-main:hover {
+  background-color: #0055a4;
+}
+
 .results-container .error-message {
-  color: #D8000C;
-  background-color: #FFD2D2;
+  color: #d8000c;
+  background-color: #ffbaba;
   padding: 1rem;
   border-radius: 8px;
-  font-weight: 500;
+  border: 1px solid #d8000c;
+}
+
+.results-container p {
+  color: #333; /* Use a dark color for readability on a white background */
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Main container for the entire "Search Visitas" page.
+  This adds the necessary padding to push content below the fixed navbar.
+*/
+.visitas-search-page-container {
+  width: 100%;
+  min-height: 100vh;
+  /* FIX: Add top padding to avoid being covered by the navbar */
+  padding: calc(9vh + 2rem) 2rem;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+/* 
+  Wrapper for the form and results.
+  This will stack them vertically.
+*/
+.visitas-search-content {
+  width: 100%;
+  max-width: 900px; /* Adjust max-width as needed */
+  display: flex;
+  /* FIX: Change flex-direction to stack items vertically */
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem; /* Adds space between the form and the results */
+}
+
+/* Styling for the form container within this page */
+.visitas-search-content .form-container {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 0; /* Reset any default margins */
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 992px) {
+    .visitas-search-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .visitas-search-container .form-container {
+        width: 100%;
+        max-width: 700px;
+    }
+
+    .results-container {
+        width: 100%;
+        max-width: 700px;
+        margin-top: 2rem;
+    }
 }

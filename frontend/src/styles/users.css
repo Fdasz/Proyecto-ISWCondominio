@@ -21,7 +21,7 @@
 }
 
 .title-table {
-    color: #003366;
+    color: white;
     margin-left: 70px;
 }
 
@@ -44,6 +44,7 @@
 @media (max-width: 767px) {
     .title-table {
         margin: 0;
+        color: white;
     }
     .top-table {
         display: flex;
@@ -83,6 +84,7 @@
 @media (min-width: 768px) and (max-width: 1024px) {
     .title-table {
         margin-left: 35px;
+        color:white;
     }
 
     .delete-user-button {

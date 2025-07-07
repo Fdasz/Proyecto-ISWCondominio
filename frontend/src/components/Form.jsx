@@ -22,7 +22,6 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
     };
 
     const renderInput = (field) => {
-        // Search fields (readOnly)
         if (field.readOnly) {
             return (
                 <input
@@ -36,7 +35,6 @@ const Form = ({ title, fields, buttonText, onSubmit, footerContent, backgroundCo
             );
         }
 
-        // Regular form fields
         return (
             <input
                 {...register(field.name, {

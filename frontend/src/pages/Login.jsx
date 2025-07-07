@@ -14,7 +14,6 @@ const Login = () => {
     } = useLogin();
 
     const loginSubmit = async (data) => {
-        console.log(data); // Add this line
         try {
             const response = await login(data);
             if (response.status === 'Success') {

@@ -1,6 +1,5 @@
 import axios from './root.service';
 
-// src/services/visitante.service.js
 export const getVisitante = async (query) => {
   try {
     const { data } = await axios.get('/visitantes/detail', { params: query });

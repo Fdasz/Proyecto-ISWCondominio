@@ -35,6 +35,120 @@
 }
 
 
+/* Main Page Container */
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: linear-gradient(135deg, #002651 0%, #003366 100%);
+  /* FIX: Add padding to push content below the navbar */
+  padding: calc(9vh + 2rem) 2rem; 
+  box-sizing: border-box;
+}
+
+/* Form Wrapper */
+.form {
+    background-color: #eef7ff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 24px;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Form Title */
+.form h1 {
+    color: #003366;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 0 2rem 0;
+    text-align: center;
+}
+
+/* Form Groups (for label + input pairs) */
+.form div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+/* Form Labels */
+.form label {
+    color: #003366;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+/* Common styles for input, select, textarea */
+.form input,
+.form select,
+.form textarea {
+    display: flex;
+    border: 3px solid #003366;
+    border-radius: 12px;
+    padding: 12px 15px;
+    background-color: #eef7ff;
+    font-size: 16px;
+    color: #003366;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.form input::placeholder,
+.form select::placeholder,
+.form textarea::placeholder {
+    color: rgba(0, 51, 102, 0.4);
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+    background-color: rgba(0, 110, 223, 0.1);
+    outline: none;
+}
+
+/* Submit Button */
+.form button {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    border-radius: 12px;
+    border: 3px solid #003366;
+    width: 100%;
+    background-color: #003366;
+    color: #eef7ff;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: .3s ease-out;
+}
+
+.form button:hover {
+    border: 3px solid #003366;
+    background-color: #eef7ff;
+    color: #003366;
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+    .form {
+        padding: 1.5rem;
+        width: 95%;
+    }
+    .form h1 {
+        font-size: 24px;
+    }
+    .container {
+        padding: calc(9vh + 1rem) 10px 1rem;
+    }
+}
+
 .form {
 	background-color: #eef7ff; /*Color del formulario*/
 	padding: 7vh;
@@ -177,17 +291,6 @@
 }
 .form .error-message.visible {
     visibility: visible;
-}
-
-.container {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background: linear-gradient(135deg, #002651 0%, #003366 100%);
-  padding-top: calc(9vh + 2rem); /* Match navbar height + add some space */
-  box-sizing: border-box;
 }
 
 input[type='email'] {

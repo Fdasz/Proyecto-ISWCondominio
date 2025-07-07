@@ -2,14 +2,13 @@
 import User from "../entity/user.entity.js";
 import { AppDataSource } from "../config/configDb.js";
 import { comparePassword, encryptPassword } from "../helpers/bcrypt.helper.js";
-import { ILike } from "typeorm"; // <-- Import ILike
+import { ILike } from "typeorm"; 
 
 export async function getUserService(query) {
   try {
     const { rut_usuario, id_usuario, email_usuario, nombre_usuario } = query;
     const userRepository = AppDataSource.getRepository(User);
 
-    // Build the where conditions dynamically
     const whereConditions = [];
     if (id_usuario) {
       whereConditions.push({ id_usuario: id_usuario });
@@ -21,16 +20,13 @@ export async function getUserService(query) {
       whereConditions.push({ email_usuario: email_usuario });
     }
     if (nombre_usuario) {
-      // Use ILike for case-insensitive partial matching (e.g., 'juan' matches 'Juan Carlos')
       whereConditions.push({ nombre_usuario: ILike(`%${nombre_usuario}%`) });
     }
 
-    // If no valid search parameters are provided, return an error.
     if (whereConditions.length === 0) {
       return [null, "Debe proporcionar al menos un parámetro de búsqueda"];
     }
 
-    // If searching by name, we might get multiple results, so use find()
     if (nombre_usuario) {
         const usersFound = await userRepository.find({
             where: whereConditions,
@@ -39,7 +35,6 @@ export async function getUserService(query) {
         if (!usersFound || usersFound.length === 0) return [null, "Usuario no encontrado"];
         return [usersFound, null];
     } else {
-        // For other unique fields, we expect one result, so use findOne()
         const userFound = await userRepository.findOne({
             where: whereConditions,
         });

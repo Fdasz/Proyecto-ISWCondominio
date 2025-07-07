@@ -40,3 +40,25 @@ export const searchVisitas = async (filters) => {
     return [null, errorMessage];
   }
 };
+
+export const updateVisita = async (id, visitData) => {
+  try {
+    const response = await axios.patch(`/visitas/${id}`, visitData);
+    return [response.data.data, null];
+  } catch (error) {
+    console.error("Error updating visit:", error.response?.data || error.message);
+    const errorMessage = error.response?.data?.message || 'Error de red o en el servidor.';
+    return [null, errorMessage];
+  }
+};
+
+export const deleteVisita = async (id) => {
+  try {
+    const response = await axios.delete(`/visitas/${id}`);
+    return [response.data, null];
+  } catch (error) {
+    console.error("Error deleting visit:", error.response?.data || error.message);
+    const errorMessage = error.response?.data?.message || 'Error al eliminar la visita.';
+    return [null, errorMessage];
+  }
+};

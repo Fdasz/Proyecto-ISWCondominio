@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { logout } from '@services/auth.service.js';
 import '@styles/navbar.css';
 import { useState } from "react";
@@ -8,6 +8,11 @@ const Navbar = () => {
     const user = JSON.parse(sessionStorage.getItem('usuario')) || '';
     const userRole = user?.rol;
     const [menuOpen, setMenuOpen] = useState(false);
+    const location = useLocation();
+
+    const isVisitasActive = location.pathname.startsWith('/visits') || 
+                            location.pathname.startsWith('/visitas') || 
+                            location.pathname.startsWith('/visitante');
 
     const logoutSubmit = () => {
         try {
@@ -46,44 +51,18 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
+                    {(userRole === 'administrador' || userRole === 'portero') && (
+                        <li className="dropdown">
+                            <a href="#!" className={`dropbtn ${isVisitasActive ? 'active' : ''}`}>Visitas</a>
+                            <div className="dropdown-content">
+                                <NavLink to="/visits" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Registrar Visita</NavLink>
+                                <NavLink to="/visitante/new" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Registrar Visitante</NavLink>
+                                <NavLink to="/visitas" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? 'active' : ''}>Buscar Visitas</NavLink>
+                            </div>
+                        </li>
+                    )}
                     <li>
-                        <NavLink 
-                            to="/visitante/new" 
-                            onClick={() => setMenuOpen(false)} 
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            Reg. Visitante
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink 
-                            to="/visits" 
-                            onClick={() => setMenuOpen(false)} 
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            Reg. Visita
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink 
-                            to="/visitas" 
-                            onClick={() => setMenuOpen(false)} 
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            Buscar Visitas
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink 
-                            to="/auth" 
-                            onClick={() => { 
-                                logoutSubmit(); 
-                                setMenuOpen(false); 
-                            }} 
-                            className={({ isActive }) => isActive ? 'active' : ''}
-                        >
-                            Cerrar sesión
-                        </NavLink>
+                        <a href="#!" onClick={logoutSubmit}>Cerrar Sesión</a>
                     </li>
                 </ul>
             </div>

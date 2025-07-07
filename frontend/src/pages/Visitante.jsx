@@ -1,37 +1,27 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Form from '@components/Form';
 import { createVisitante } from '@services/visitante.service';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
 import '@styles/form.css';
-import '@styles/visits.css'; // Reusing styles for consistency
+import '@styles/visits.css';
 
 const Visitante = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    nombre_visitante: '',
-    rut_visitante: '',
-    patente_visitante: '',
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
 
   const handleFormSubmit = async (data) => {
-    const finalData = { ...formData, ...data };
-    if (!finalData.nombre_visitante || !finalData.rut_visitante) {
+    if (!data.nombre_visitante || !data.rut_visitante) {
       showErrorAlert('Campos incompletos', 'Debe ingresar el nombre y el RUT del visitante.');
       return;
     }
     try {
-      const [visitante, error] = await createVisitante(finalData);
+
+      // eslint-disable-next-line no-unused-vars
+      const [_visitante, error] = await createVisitante(data);
       if (error) {
         showErrorAlert('Error', error || 'No se pudo registrar al visitante.');
       } else {
         showSuccessAlert('Éxito', 'Visitante registrado correctamente.');
-        navigate('/visits'); // Navigate to the visit registration page
+        navigate('/visits');
       }
     } catch (error) {
       console.error("Error creating visitor:", error);
@@ -47,8 +37,6 @@ const Visitante = () => {
       fieldType: 'input',
       type: "text",
       required: true,
-      value: formData.nombre_visitante,
-      onChange: handleChange
     },
     {
       label: "RUT",
@@ -57,8 +45,6 @@ const Visitante = () => {
       fieldType: 'input',
       type: "text",
       required: true,
-      value: formData.rut_visitante,
-      onChange: handleChange
     },
     {
       label: "Patente del Vehículo (Opcional)",
@@ -66,8 +52,6 @@ const Visitante = () => {
       placeholder: "Ej: ABCD12",
       fieldType: 'input',
       type: "text",
-      value: formData.patente_visitante,
-      onChange: handleChange
     }
   ];
 

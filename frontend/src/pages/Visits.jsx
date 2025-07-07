@@ -101,6 +101,7 @@ const Visits = () => {
       placeholder: "Ej: ABCD12",
       fieldType: 'input',
       type: "text",
+      readOnly: true,
       value: formData.patente_visitante,
       onChange: handleChange
     },

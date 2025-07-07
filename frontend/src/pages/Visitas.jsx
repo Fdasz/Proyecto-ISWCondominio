@@ -1,20 +1,30 @@
 import { useVisitas } from '@hooks/visits/useVisitas';
 import Form from '@components/Form';
-import Table from '@components/Table';
+import VisitaCard from '@components/VisitaCard';
+import { deleteDataAlert, showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
+import { deleteVisita } from '@services/visita.service';
 import '@styles/form.css';
 import '@styles/visitas_search.css';
 
-import { DateTime } from 'luxon';
-if (window.luxon === undefined) {
-  window.luxon = { DateTime };
-}
-
-
 function Visitas() {
-  const { visitas, loading, error, performSearch } = useVisitas();
+  const { visitas, loading, error, performSearch, setVisitas } = useVisitas();
 
   const handleSearch = (formData) => {
     performSearch(formData);
+  };
+
+  const handleDelete = async (id) => {
+    const result = await deleteDataAlert();
+
+    if (result.isConfirmed) {
+      const [, error] = await deleteVisita(id);
+      if (error) {
+        showErrorAlert('Error', error);
+      } else {
+        showSuccessAlert('Eliminada', 'La visita ha sido eliminada.');
+        setVisitas(prevVisitas => prevVisitas.filter(v => v.id_visita !== id));
+      }
+    }
   };
 
   const searchFields = [
@@ -25,22 +35,6 @@ function Visitas() {
     { name: 'patente_visitante', label: 'Patente', placeholder: 'Ingrese patente', fieldType: 'input', type: 'text' },
     { name: 'startDate', label: 'Desde:', fieldType: 'input', type: 'date' },
     { name: 'endDate', label: 'Hasta:', fieldType: 'input', type: 'date' },
-  ];
-
-  const columns = [
-    { 
-      title: "Fecha y Hora", 
-      field: "fecha_visita", 
-      formatter: "datetime", 
-      formatterParams: { 
-        inputFormat: "iso",
-        outputFormat: "dd/MM/yyyy hh:mm a",
-        invalidPlaceholder: "(fecha inválida)",
-      } 
-    },
-    { title: "Visitante", field: "nombre_visitante" },
-    { title: "Residente", field: "nombre_usuario" },
-    { title: "Patente", field: "visitante.patente_visitante", formatter: (cell) => cell.getValue() || "N/A" },
   ];
 
   return (
@@ -57,12 +51,16 @@ function Visitas() {
         <div className="results-container">
           {loading && <p>Cargando...</p>}
           {error && <p className="error-message">Error: {error}</p>}
-          {!loading && !error && (
-            <Table
-              data={visitas}
-              columns={columns}
-              initialSortName={'fecha_visita'}
-            />
+          {!loading && !error && visitas.length > 0 ? (
+            visitas.map(visita => (
+              <VisitaCard 
+                key={visita.id_visita} 
+                visita={visita} 
+                onDelete={handleDelete} 
+              />
+            ))
+          ) : (
+            !loading && <p>No se encontraron visitas con los criterios de búsqueda.</p>
           )}
         </div>
       </div>

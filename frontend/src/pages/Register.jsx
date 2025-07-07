@@ -40,7 +40,7 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 				fields={[
 					{
 						label: "Nombre completo",
-						name: "nombre_usuario", // <-- updated
+						name: "nombre_usuario",
 						placeholder: "Diego Alexis Salazar Jara",
                         fieldType: 'input',
 						type: "text",
@@ -52,7 +52,7 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
 					},
                     {
                         label: "Correo electrónico",
-                        name: "email_usuario", // <-- updated
+                        name: "email_usuario",
                         placeholder: "example@gmail.cl",
                         fieldType: 'input',
                         type: "email",
@@ -67,7 +67,7 @@ const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d
                     },
                     {
 						label: "Rut",
-                        name: "rut_usuario", // <-- updated
+                        name: "rut_usuario",
                         placeholder: "23.770.330-1",
                         fieldType: 'input',
                         type: "text",
