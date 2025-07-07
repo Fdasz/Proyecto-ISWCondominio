@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { updateEspacioComun } from '@services/espacioComun.service.js';
+import { updateEspacioComun } from '@services/EspacioComun.service.js';
 import { showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 import { formatEspacioComunData } from '@helpers/formatData.js';
 

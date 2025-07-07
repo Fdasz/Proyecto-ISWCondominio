@@ -8,7 +8,7 @@ import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import SearchIcon from '../assets/searchIcon.svg';
+import SearchIcon from '../assets/SearchIcon.svg';
 import '@styles/espaciosComunes.css';
 
 const EspaciosComunes = () => {

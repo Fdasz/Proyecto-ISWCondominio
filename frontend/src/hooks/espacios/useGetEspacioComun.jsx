@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getEspaciosComunes } from '@services/espacioComun.service.js';
+import { getEspaciosComunes } from '@services/EspacioComun.service.js';
 
 const useEspacioComun = () => {
   const [espacios, setEspacios] = useState([]);

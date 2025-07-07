@@ -1,4 +1,4 @@
-import { deleteEspacioComun } from '@services/espacioComun.service.js';
+import { deleteEspacioComun } from '@services/EspacioComun.service.js';
 import { deleteDataAlert, showErrorAlert, showSuccessAlert } from '@helpers/sweetAlert.js';
 
 const useDeleteEspacioComun = (fetchEspacios, setDataEspacio) => {
