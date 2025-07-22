@@ -19,7 +19,7 @@ router.get("/", getEspacioComun);
 
 router.post("/", createEspacioComun);
 
-router.put("/:id_espacio", updateEspacioComun);
+router.patch("/:id_espacio", updateEspacioComun);
 
 router.delete("/:id_espacio", removeEspacioComun);
 
