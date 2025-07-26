@@ -16,8 +16,8 @@
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: relative;
-    width: 90%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 650px;
 }
 .close{
     position: absolute;
@@ -35,7 +35,7 @@
     font-weight: 700;
 }
 .popup .form {
-    padding: 35px;
+    padding: 30px;
     h1 {
         margin-bottom: 30px;
     }

@@ -4,18 +4,15 @@ import { formatEspacioComunData } from '../helpers/formatData.js';
 export async function getEspaciosComunes() {
     try {
         const { data } = await axios.get('/espaciosComunes/');
-        
-        // Verificar que la respuesta tenga la estructura esperada
         if (!data || !data.data || !Array.isArray(data.data)) {
             console.error("Estructura de datos inesperada:", data);
-            return []; // Devolver array vacío en lugar de objeto
+            return [];
         }
         
         const formattedData = data.data.map(formatEspacioComunData);
         return formattedData;
     } catch (error) {
         console.error("Error al obtener espacios comunes:", error);
-        // En caso de error, devolver array vacío para que el hook no falle
         return [];
     }
 }

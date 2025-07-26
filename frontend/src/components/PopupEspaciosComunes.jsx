@@ -1,13 +1,13 @@
 import Form from './Form';
 import '@styles/popup.css';
-import CloseIcon from '@assets/XIcon.svg';
+import CloseIcon from '@assets/XIcon.svg';  
 
 export default function Popup({ show, setShow, data, action }) {
-    // Para espacios comunes, data puede ser un objeto directo o null
     const espacioData = data || {};
 
     const handleSubmit = (formData) => {
         action(formData);
+        setShow(false);
     };
 
     // Determinar si es crear o editar
@@ -64,6 +64,7 @@ export default function Popup({ show, setShow, data, action }) {
                         onSubmit={handleSubmit}
                         buttonText={buttonText}
                         backgroundColor={'#fff'}
+                        onClose={() => window.location.reload()}
                     />
                 </div>
             </div>

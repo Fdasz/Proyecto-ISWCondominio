@@ -8,7 +8,7 @@ import DeleteIcon from '../assets/deleteIcon.svg';
 import UpdateIcon from '../assets/updateIcon.svg';
 import UpdateIconDisable from '../assets/updateIconDisabled.svg';
 import DeleteIconDisable from '../assets/deleteIconDisabled.svg';
-import SearchIcon from '../assets/SearchIcon.svg';
+import addIcon from '../assets/addIcon.svg';
 import '@styles/espaciosComunes.css';
 
 const EspaciosComunes = () => {
@@ -58,6 +58,7 @@ const EspaciosComunes = () => {
     if (popupMode === 'create') {
       return handleCreate(data);
     } else {
+      window.location.reload();
       return handleUpdate(data);
     }
   };
@@ -66,10 +67,10 @@ const EspaciosComunes = () => {
     <div className="main-container">
       <div className="top-table">
         <h1 className="title-table">Espacios Comunes</h1>
-        <div className="filter-actions">
+        <div className="filter-actions-espacios">
           <button onClick={handleClickCreate}>
             <img
-              src={SearchIcon}
+              src={addIcon}
               alt="add"
             />
           </button>
@@ -88,27 +89,27 @@ const EspaciosComunes = () => {
         </div>
       </div>
 
-      <div className="espacios-grid">
-        {espacios.length === 0 ? (
-          <p className="no-results">No se encontraron espacios comunes.</p>
-        ) : (
-          espacios.map((espacio) => (
-            <div
-              key={espacio.id_espacio}
-              className={`espacio-card ${isSelected(espacio) ? 'selected' : ''}`}
-              onClick={() => toggleSelect(espacio)}
-            >
-              <h3>{espacio.tipo_espacio_comun}</h3>
-              <p>{espacio.descripcion_espacio_comun}</p>
-              <p className={`estado ${espacio.estado_espacio_comun ? 'activo' : 'inactivo'}`}>
-                {espacio.estado_espacio_comun ? 'Activo' : 'Inactivo'}
-              </p>
-            </div>
-          ))
-        )}
+      <div className="grid-scroll-container">
+        <div className="espacios-grid">
+          {espacios.length === 0 ? (
+            <p className="no-results">No se encontraron espacios comunes.</p>
+          ) : (
+            espacios.map((espacio) => (
+              <div
+                key={espacio.id_espacio}
+                className={`espacio-card ${isSelected(espacio) ? 'selected' : ''}`}
+                onClick={() => toggleSelect(espacio)}
+              >
+                <h3>{espacio.tipo_espacio_comun}</h3>
+                <p>{espacio.descripcion_espacio_comun}</p>
+                <p className={`estado ${espacio.estado_espacio_comun === true ? 'activo' : 'inactivo'}`}>
+                  {espacio.estado_espacio_comun === true ? 'Activo' : 'Inactivo'}
+                </p>
+              </div>
+            ))
+          )}
+        </div>
       </div>
-
-      {/* Popup unificado para crear y editar */}
       <Popup 
         show={isPopupOpen} 
         setShow={setIsPopupOpen} 

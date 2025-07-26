@@ -36,6 +36,24 @@ export function formatEspacioComunData(espacio) {
         ...espacio,
         tipo_espacio_comun: startCase(espacio.tipo_espacio_comun),
         descripcion_espacio_comun: startCase(espacio.descripcion_espacio_comun),
-        estado_espacio_comun: startCase(espacio.estado_espacio_comun)
+        estado_espacio_comun: Boolean(espacio.estado_espacio_comun)
     };
+}
+
+export function formatReservaEspacioData(reserva) {
+  return {
+    ...reserva,
+    fecha_reserva: reserva.fecha_reserva, // si quieres darle formato, puedes usar date-fns
+    hora_inicio: reserva.hora_inicio,
+    hora_fin: reserva.hora_fin,
+    espacio: reserva.espacio ? {
+      ...reserva.espacio,
+      tipo_espacio_comun: startCase(reserva.espacio.tipo_espacio_comun),
+      descripcion_espacio_comun: startCase(reserva.espacio.descripcion_espacio_comun),
+    } : null,
+    usuario: reserva.usuario ? {
+      ...reserva.usuario,
+      nombre_usuario: startCase(reserva.usuario.nombre_usuario),
+    } : null,
+  };
 }
