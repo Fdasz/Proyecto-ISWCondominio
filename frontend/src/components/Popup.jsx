@@ -1,103 +1,83 @@
 import Form from './Form';
 import '@styles/popup.css';
 import CloseIcon from '@assets/XIcon.svg';
-import QuestionIcon from '@assets/QuestionCircleIcon.svg';
 
-export default function Popup({ show, setShow, data, action }) {
-    const userData = data && data.length > 0 ? data[0] : {};
+export default function PopupReserva({ show, setShow, data = {}, espacios = [], action }) {
+  const isEdit = !!data?.id_reserva;
 
-    const handleSubmit = (formData) => {
-        action(formData);
-    };
+  const handleSubmit = (formData) => {
+    action(formData);
+  };
 
-    const patternRut = new RegExp(/^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/);
-    return (
-        <div>
-            { show && (
-            <div className="bg">
-                <div className="popup">
-                    <button className='close' onClick={() => setShow(false)}>
-                        <img src={CloseIcon} />
-                    </button>
-                    <Form
-                        title="Editar usuario"
-                        fields={[
-                            {
-                                label: "Nombre completo",
-                                name: "nombre_usuario",
-                                defaultValue: userData.nombre_usuario || "",
-                                placeholder: 'Diego Alexis Salazar Jara',
-                                fieldType: 'input',
-                                type: "text",
-                                required: true,
-                                minLength: 15,
-                                maxLength: 50,
-                                pattern: /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/,
-                                patternMessage: "Debe contener solo letras y espacios",
-                            },
-                            {
-                                label: "Correo electrónico",
-                                name: "email_usuario",
-                                defaultValue: userData.email_usuario || "",
-                                placeholder: 'example@gmail.cl',
-                                fieldType: 'input',
-                                type: "email",
-                                required: true,
-                                minLength: 15,
-                                maxLength: 30,
-                            },
-                            {
-                                label: "Rut",
-                                name: "rut_usuario",
-                                defaultValue: userData.rut_usuario || "",
-                                placeholder: '21.308.770-3',
-                                fieldType: 'input',
-                                type: "text",
-                                minLength: 9,
-                                maxLength: 12,
-                                pattern: patternRut,
-                                patternMessage: "Debe ser xx.xxx.xxx-x o xxxxxxxx-x",
-                                required: true,
-                            },
-                            {
-                                label: "Rol",
-                                name: "rol",
-                                fieldType: 'select',
-                                options: [
-                                    { value: 'administrador', label: 'Administrador' },
-                                    { value: 'usuario', label: 'Usuario' },
-                                ],
-                                required: true,
-                                defaultValue: userData.rol || "",
-                            },
-                            {
-                                label: (
-                                    <span>
-                                        Nueva contraseña
-                                        <span className='tooltip-icon'>
-                                            <img src={QuestionIcon} />
-                                            <span className='tooltip-text'>Este campo es opcional</span>
-                                        </span>
-                                    </span>
-                                ),
-                                name: "newPassword",
-                                placeholder: "**********",
-                                fieldType: 'input',
-                                type: "password",
-                                required: false,
-                                minLength: 8,
-                                maxLength: 26,
-                                pattern: /^[a-zA-Z0-9]+$/,
-                                patternMessage: "Debe contener solo letras y números",
-                            }
-                        ]}
-                        onSubmit={handleSubmit}
-                        buttonText="Editar usuario"
-                        backgroundColor={'#fff'}
-                    />
-                </div>
-            </div>
-            )}
+  const generarOpcionesHora = () => {
+    const opciones = [];
+    for (let h = 0; h < 24; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        const hh = h.toString().padStart(2, '0');
+        const mm = m.toString().padStart(2, '0');
+        opciones.push({ value: `${hh}:${mm}`, label: `${hh}:${mm}` });
+      }
+    }
+    return opciones;
+  };
+
+  const opcionesHora = generarOpcionesHora();
+
+  return (
+    <>
+      {show && (
+        <div className="bg">
+          <div className="popup">
+            <button className="close" onClick={() => setShow(false)}>
+              <img src={CloseIcon} alt="Cerrar" />
+            </button>
+            <Form
+              title={isEdit ? "Editar Reserva" : "Nueva Reserva"}
+              fields={[
+                {
+                  label: "Fecha",
+                  name: "fecha_reserva",
+                  defaultValue: data.fecha_reserva || new Date().toISOString().split('T')[0],
+                  fieldType: "input",
+                  type: "date",
+                  required: true,
+                  readOnly: true,
+                },
+                {
+                  label: "Espacio Común",
+                  name: "id_espacio",
+                  fieldType: "select",
+                  options: espacios.map(e => ({
+                    value: e.id_espacio,
+                    label: e.tipo_espacio_comun,
+                  })),
+                  required: true,
+                  defaultValue: data.espacio?.id_espacio || "",
+                },
+                {
+                  label: "Hora de Inicio",
+                  name: "hora_inicio",
+                  fieldType: "select",
+                  options: opcionesHora,
+                  required: true,
+                  defaultValue: data.hora_inicio || "",
+                },
+                {
+                  label: "Hora de Término",
+                  name: "hora_fin",
+                  fieldType: "select",
+                  options: opcionesHora,
+                  required: true,
+                  defaultValue: data.hora_fin || "",
+                },
+              ]}
+              onSubmit={handleSubmit}
+              buttonText={isEdit ? "Guardar Cambios" : "Crear Reserva"}
+              backgroundColor="#fff"
+            />
+          </div>
         </div>
-    );
+      )}
+    </>
+  );
 }

@@ -10,7 +10,6 @@ export default function Popup({ show, setShow, data, action }) {
         setShow(false);
     };
 
-    // Determinar si es crear o editar
     const isEditing = data && data.id_espacio;
     const title = isEditing ? "Editar Espacio Común" : "Crear Espacio Común";
     const buttonText = isEditing ? "Actualizar Espacio" : "Crear Espacio";
@@ -64,7 +63,6 @@ export default function Popup({ show, setShow, data, action }) {
                         onSubmit={handleSubmit}
                         buttonText={buttonText}
                         backgroundColor={'#fff'}
-                        onClose={() => window.location.reload()}
                     />
                 </div>
             </div>

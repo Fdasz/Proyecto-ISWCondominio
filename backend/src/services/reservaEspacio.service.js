@@ -100,10 +100,11 @@ export async function getReservasEspacioService(filters) {
         "espacio.tipo_espacio_comun", 
         "espacio.descripcion_espacio_comun",
         "usuario.nombre_usuario",
+        "usuario.rut_usuario",
+        "usuario.email_usuario",
         "usuario.rut_usuario"
       ]);
 
-    // Aplicar filtros dinámicamente
     if (filters.id_reserva) {
       queryBuilder.andWhere("reserva.id_reserva = :id_reserva", {
         id_reserva: filters.id_reserva,

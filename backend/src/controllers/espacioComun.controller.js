@@ -22,7 +22,6 @@ export async function getEspacioComun(req, res) {
             Object.entries(req.query).filter(([_, value]) => value !== undefined && value !== '')
         );
 
-        // Solo validar si hay parámetros
         if (Object.keys(queryParams).length > 0) {
             const { error } = espacioComunQueryValidation.validate(queryParams);
             if (error) return handleErrorClient(res, 400, error.message);
@@ -69,7 +68,6 @@ export async function updateEspacioComun(req, res) {
         const { error } = espacioComunUpdateValidation.validate(req.body);
         if (error) return handleErrorClient(res, 400, error.message);
 
-        // Pasar un objeto query como espera el service
         const [espacioComun, errorEspacioComun] = await updateEspacioComunService(id_espacio, req.body);
 
         if (errorEspacioComun) return handleErrorClient(res, 404, errorEspacioComun);

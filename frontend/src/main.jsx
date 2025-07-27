@@ -71,7 +71,7 @@ const router = createBrowserRouter([
         path: '/reservasEspaciosComunes',
         element: (
           <ProtectedRoute allowedRoles={['administrador', 'portero', 'residente']}>
-            <EspaciosComunes />
+            <ReservasEspacios />
           </ProtectedRoute>
         )
       }
