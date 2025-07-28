@@ -7,15 +7,12 @@ const useEspacioComun = () => {
   const fetchEspacios = async () => {
     try {
       const response = await getEspaciosComunes();
-      
-      // Verificar que la respuesta existe y es un array
       if (!response || !Array.isArray(response)) {
         console.error("No se encontraron espacios comunes:", response);
         setEspacios([]);
         return;
       }
 
-      // Los datos ya vienen formateados del servicio
       dataLogged(response);
       setEspacios(response);
     } catch (error) {

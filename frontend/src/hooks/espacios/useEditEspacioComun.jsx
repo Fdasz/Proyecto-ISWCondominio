@@ -14,29 +14,30 @@ const useEditEspacioComun = (setEspacios) => {
     };
 
     const handleUpdate = async (updatedEspacioData) => {
-        if (updatedEspacioData) {
-            try {
-                const updated = await updateEspacioComun(dataEspacio[0].id_espacio, updatedEspacioData);
-                showSuccessAlert('¡Actualizado!', 'El espacio común ha sido actualizado correctamente.');
-                setIsPopupOpen(false);
+  if (updatedEspacioData) {
+    try {
+      const updated = await updateEspacioComun(dataEspacio.id_espacio, updatedEspacioData);
+      showSuccessAlert('¡Actualizado!', 'El espacio común ha sido actualizado correctamente.');
+      setIsPopupOpen(false);
 
-                const formattedEspacio = formatEspacioComunData(updated.data);
+      const formattedEspacio = formatEspacioComunData(updated.data);
 
-                setEspacios(prev =>
-                    prev.map(espacio =>
-                        espacio.id_espacio === formattedEspacio.id_espacio
-                            ? formattedEspacio
-                            : espacio
-                    )
-                );
+      setEspacios(prev =>
+        prev.map(espacio =>
+          espacio.id_espacio === formattedEspacio.id_espacio
+            ? formattedEspacio
+            : espacio
+        )
+      );
 
-                setDataEspacio([]);
-            } catch (error) {
-                console.error('Error al actualizar el espacio común:', error);
-                showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el espacio común.');
-            }
-        }
-    };
+      setDataEspacio(null);
+    } catch (error) {
+      console.error('Error al actualizar el espacio común:', error);
+      showErrorAlert('Cancelado', 'Ocurrió un error al actualizar el espacio común.');
+    }
+  }
+};
+
 
     return {
         handleClickUpdate,

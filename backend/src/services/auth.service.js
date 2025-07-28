@@ -32,7 +32,7 @@ export async function loginService(user) {
     const payload = {
       nombre_usuario: userFound.nombre_usuario,
       email_usuario: userFound.email_usuario,
-      rut_usuario: userFound.rut,
+      rut_usuario: userFound.rut_usuario,
       rol: userFound.rol,
     };
 

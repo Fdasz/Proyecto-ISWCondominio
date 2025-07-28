@@ -48,16 +48,16 @@ export async function updateEspacioComunService(id_espacio, body) {
     try {
         const espacioComunRepository = AppDataSource.getRepository(espacioComun);
 
-        const espacioComun = await espacioComunRepository.findOneBy({ id_espacio });
-
-        if (!espacioComun) return [null, "No existe el espacio común"];
-
-        const updatedEspacioComun = await espacioComunRepository.save({
-            ...espacioComun,
-            ...body
+        const espacioFound = await espacioComunRepository.findOne({
+            where: { id_espacio }
         });
 
-        return [updatedEspacioComun, null];
+        if (!espacioFound) return [null, "Espacio común no encontrado"];
+
+        espacioComunRepository.merge(espacioFound, body);
+        await espacioComunRepository.save(espacioFound);
+
+        return [espacioFound, null];
     } catch (error) {
         console.error("Error al actualizar el espacio común:", error);
         return [null, "Error interno del servidor"];

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '@services/auth.service.js';
 import Form from '@components/Form';
 import useLogin from '@hooks/auth/useLogin.jsx';
+import { parseJwt } from '../helpers/jwt.js';
 import '@styles/form.css';
 
 const Login = () => {
@@ -17,6 +18,9 @@ const Login = () => {
         try {
             const response = await login(data);
             if (response.status === 'Success') {
+                localStorage.setItem('token', response.token);
+                const user = parseJwt(response.token);
+                localStorage.setItem('usuario', JSON.stringify(user));
                 navigate('/home');
             } else if (response.status === 'Client error') {
                 errorData(response.details);

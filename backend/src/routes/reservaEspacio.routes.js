@@ -13,6 +13,7 @@ const router = Router();
 router
     .use(authenticateJwt)
     .use(isAdmin);
+    
 router.get("/", getReservaEspacio);
 
 router.post("/", createReservaEspacio);

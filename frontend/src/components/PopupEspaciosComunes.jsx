@@ -1,16 +1,15 @@
 import Form from './Form';
 import '@styles/popup.css';
-import CloseIcon from '@assets/XIcon.svg';
+import CloseIcon from '@assets/XIcon.svg';  
 
 export default function Popup({ show, setShow, data, action }) {
-    // Para espacios comunes, data puede ser un objeto directo o null
     const espacioData = data || {};
 
     const handleSubmit = (formData) => {
         action(formData);
+        setShow(false);
     };
 
-    // Determinar si es crear o editar
     const isEditing = data && data.id_espacio;
     const title = isEditing ? "Editar Espacio Común" : "Crear Espacio Común";
     const buttonText = isEditing ? "Actualizar Espacio" : "Crear Espacio";

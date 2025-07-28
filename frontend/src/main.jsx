@@ -14,6 +14,8 @@ import '@styles/styles.css';
 import Visits from '@pages/Visits';
 import Visitas from '@pages/Visitas';
 import Visitante from '@pages/Visitante';
+import ReservasEspacios from '@pages/reservasEspaciosComunes';
+
 
 const router = createBrowserRouter([
   {
@@ -62,6 +64,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
             <EspaciosComunes />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: '/reservasEspaciosComunes',
+        element: (
+          <ProtectedRoute allowedRoles={['administrador', 'portero', 'residente']}>
+            <ReservasEspacios />
           </ProtectedRoute>
         )
       }
