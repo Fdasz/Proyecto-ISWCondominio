@@ -393,6 +393,11 @@
   color: #fff !important;
 }
 
+.visitante-info, .visitante-info *, .visitante-info strong, .visitante-info span, .visitante-info p, .visitante-info h4 {
+  color: #000 !important;
+  background: transparent !important;
+}
+
 @media (max-width: 768px) {
   .gestionar-tabs {
     flex-direction: column;

@@ -123,12 +123,12 @@ export default function EditarVisitanteForm() {
           borderRadius: '5px', 
           marginBottom: '20px',
           border: '1px solid #dee2e6',
-          color: '#333'
+          color: '#000', // Set default text color for all children
         }}>
-          <h4 style={{ color: '#333', marginBottom: '10px' }}>Visitante Seleccionado:</h4>
-          <p style={{ color: '#333', margin: '5px 0' }}><strong>ID:</strong> {visitante.id_visitante}</p>
-          <p style={{ color: '#333', margin: '5px 0' }}><strong>Nombre:</strong> {visitante.nombre_visitante}</p>
-          <p style={{ color: '#333', margin: '5px 0' }}><strong>RUT:</strong> {visitante.rut_visitante}</p>
+          <h4 style={{ color: '#000', marginBottom: '10px' }}>Visitante Seleccionado:</h4>
+          <p style={{ color: '#000', margin: '5px 0' }}><strong style={{color:'#000'}}>ID:</strong> <span style={{color:'#000'}}>{visitante.id_visitante}</span></p>
+          <p style={{ color: '#000', margin: '5px 0' }}><strong style={{color:'#000'}}>Nombre:</strong> <span style={{color:'#000'}}>{visitante.nombre_visitante}</span></p>
+          <p style={{ color: '#000', margin: '5px 0' }}><strong style={{color:'#000'}}>RUT:</strong> <span style={{color:'#000'}}>{visitante.rut_visitante}</span></p>
         </div>
       )}
 
