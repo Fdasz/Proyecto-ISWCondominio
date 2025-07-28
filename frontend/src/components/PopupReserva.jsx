@@ -79,7 +79,9 @@ export default function PopupReserva({
                 label: 'Espacio Común',
                 name: 'id_espacio_comun',
                 fieldType: 'select',
-                options: espacios.map((e) => ({
+                options: espacios
+                .filter((e) => e.estado_espacio_comun !== false)
+                .map((e) => ({
                   value: e.id_espacio,
                   label: e.tipo_espacio_comun,
                 })),

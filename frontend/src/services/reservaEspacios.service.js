@@ -26,7 +26,7 @@ export async function createReservaEspacio(data) {
     }
     return formatReservaEspacioData(response.data.data);
   } catch (error) {
-    console.error("Error en createReservaEspacioService:", error);
+    alert("Ya existe una reserva para el espacio en el horario seleccionado.");
     throw error;
   }
 }
@@ -46,7 +46,7 @@ export async function updateReservaEspacio(id_reserva, data) {
     const response = await axios.put(`/reservasEspacio/${id_reserva}/`, data); // ← Barra agregada
     return formatReservaEspacioData(response.data.data);
   } catch (error) {
-    console.error("Error en updateReservaEspacioService:", error);
+    alert("Ya existe una reserva para el espacio en el horario seleccionado.");
     throw error;
   }
 }

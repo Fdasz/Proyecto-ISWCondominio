@@ -33,7 +33,6 @@ export async function createReservaEspacioService({
     });
 
     if (conflicto) {
-      // Verificar solapamiento de horarios
       const horaInicioExistente = conflicto.hora_inicio;
       const horaFinExistente = conflicto.hora_fin;
       
@@ -45,8 +44,6 @@ export async function createReservaEspacioService({
         return [null, "Ya existe una reserva en ese horario para el espacio seleccionado"];
       }
     }
-
-    // 4. Crear la reserva
     const reservaEspacio = await reservaEspacioRepository.save({
       fecha_reserva,
       hora_inicio,
@@ -55,7 +52,6 @@ export async function createReservaEspacioService({
       usuario,
     });
 
-    // 5. Retornar con relaciones cargadas
     const reservaCompleta = await reservaEspacioRepository.findOne({
       where: { id_reserva: reservaEspacio.id_reserva },
       relations: ["espacio", "usuario"],
@@ -103,7 +99,7 @@ export async function getReservasEspacioService(filters) {
         "usuario.rut_usuario",
         "usuario.email_usuario",
         "usuario.rut_usuario"
-      ]);
+      ]).andWhere("espacio.estado_espacio_comun = true");
 
     if (filters.id_reserva) {
       queryBuilder.andWhere("reserva.id_reserva = :id_reserva", {

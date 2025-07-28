@@ -38,6 +38,11 @@ const ReservasEspaciosComunes = () => {
       const usuarioJson = sessionStorage.getItem('usuario');
       const usuario = usuarioJson ? JSON.parse(usuarioJson) : null;
 
+      if (data.hora_inicio >= data.hora_fin) {
+        alert("La hora de inicio debe ser anterior a la hora de fin.");
+        return false;
+      }
+
       console.log(usuario);
 
       const formattedData = {
@@ -75,6 +80,11 @@ const ReservasEspaciosComunes = () => {
         setIsPopupOpen(false);
         setSelectedReserva(null);
       }
+      if (data.hora_inicio >= data.hora_fin) {
+        alert("La hora de inicio debe ser anterior a la hora de fin.");
+        return false;
+      }
+
       return result;
     } catch (error) {
       console.error("Error al actualizar reserva:", error);
