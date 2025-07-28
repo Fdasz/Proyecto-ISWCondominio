@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '@components/Navbar';
+import Sidebar from '@components/Sidebar';
 import { AuthProvider } from '@context/AuthContext';
 
 function Root()  {
@@ -11,12 +11,14 @@ return (
 }
 
 function PageRoot() {
-return (
+  return (
     <>
-        <Navbar />
+      <Sidebar />
+      <div className="main-content">
         <Outlet />
+      </div>
     </>
-);
+  );
 }
 
 export default Root;

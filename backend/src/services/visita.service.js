@@ -36,9 +36,8 @@ export async function searchVisitasService(queryParams) {
         nombre_usuario: `%${nombre_usuario}%`,
       });
     }
-    // Search on the related 'visitante' entity for the patent
     if (patente_visitante) {
-      query.andWhere("visitante.patente_visitante ILIKE :patente_visitante", {
+      query.andWhere("visita.patente_visitante ILIKE :patente_visitante", {
         patente_visitante: `%${patente_visitante}%`,
       });
     }
@@ -97,7 +96,6 @@ export async function updateVisitaService(query, body) {
 
         if (!visitaFound) return [null, "Visita no encontrada"];
 
-        // FIX: The mapping logic is no longer needed. The body fields match the entity.
         visitaRepository.merge(visitaFound, body);
         await visitaRepository.save(visitaFound);
 

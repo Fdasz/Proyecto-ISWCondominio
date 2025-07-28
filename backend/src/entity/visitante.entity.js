@@ -21,10 +21,6 @@ const VisitanteSchema = new EntitySchema({
       length: 60,
       nullable: false,
     },
-    patente_visitante: {
-      type: "varchar",
-      length: 9,
-    },
   },
   indices: [
     {
@@ -36,11 +32,7 @@ const VisitanteSchema = new EntitySchema({
       name: "IDX_VISITANTE_RUT",
       columns: ["rut_visitante"],
       unique: true,
-    },
-    {
-      name: "IDX_VISITANTE_PATENTE",
-      columns: ["patente_visitante"],
-    },
+    }
   ],
 });
 

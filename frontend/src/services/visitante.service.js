@@ -24,3 +24,12 @@ export async function createVisitante(visitanteData) {
     return [null, error.response?.data?.message || 'Error al crear visitante'];
   }
 }
+
+export async function updateVisitante(id, visitanteData) {
+  try {
+    const { data } = await axios.patch(`/visitantes/${id}`, visitanteData);
+    return [data.data, null];
+  } catch (error) {
+    return [null, error.response?.data?.message || 'Error al actualizar visitante'];
+  }
+}

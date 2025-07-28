@@ -73,14 +73,27 @@ export async function updateVisitanteService(query, body) {
 
         if (!visitanteFound) return [null, "Visitante no encontrado"];
 
-        const existingVisitante = await visitanteRepository.findOne({
-            where: {
-                rut_visitante: body.rut_visitante
-            },
-        });
+        // Only check for duplicate RUT if we're updating the RUT
+        if (body.rut_visitante) {
+            // Check if there are existing visits for this visitante
+            const visitaRepository = AppDataSource.getRepository("Visita");
+            const existingVisits = await visitaRepository.find({
+                where: { rut_visitante: visitanteFound.rut_visitante }
+            });
 
-        if (existingVisitante && existingVisitante.id_visitante !== visitanteFound.id_visitante) {
-            return [null, "El rut ya está registrado"];
+            if (existingVisits.length > 0) {
+                return [null, "No se puede modificar el RUT de un visitante que tiene visitas registradas"];
+            }
+
+            const existingVisitante = await visitanteRepository.findOne({
+                where: {
+                    rut_visitante: body.rut_visitante
+                },
+            });
+
+            if (existingVisitante && existingVisitante.id_visitante !== visitanteFound.id_visitante) {
+                return [null, "El rut ya está registrado"];
+            }
         }
 
         const updatedVisitante = { ...visitanteFound, ...body };
@@ -97,7 +110,7 @@ export async function updateVisitanteService(query, body) {
 export async function createVisitanteService(body) {
   try {
     const visitanteRepository = AppDataSource.getRepository(Visitante);
-    const { rut_visitante, nombre_visitante, patente_visitante } = body;
+    const { rut_visitante, nombre_visitante } = body;
 
     const existingRut = await visitanteRepository.findOne({
       where: { rut_visitante: rut_visitante },
@@ -110,7 +123,6 @@ export async function createVisitanteService(body) {
     const newVisitante = visitanteRepository.create({
       rut_visitante,
       nombre_visitante,
-      patente_visitante,
     });
 
     await visitanteRepository.save(newVisitante);

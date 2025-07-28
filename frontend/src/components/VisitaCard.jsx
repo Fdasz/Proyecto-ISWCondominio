@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
-import '@styles/visita_card.css';
+import '@styles/visitas_main.css';
 
 const VisitaCard = ({ visita, onDelete }) => {
-  const { id_visita, nombre_visitante, nombre_usuario, fecha_visita, visitante } = visita;
+  const { id_visita, nombre_visitante, nombre_usuario, fecha_visita, patente_visitante } = visita;
 
   const formattedDate = DateTime.fromISO(fecha_visita).toLocaleString(DateTime.DATETIME_SHORT);
 
@@ -22,7 +22,7 @@ const VisitaCard = ({ visita, onDelete }) => {
       </div>
       <div className="card-section">
         <span className="card-label">Patente</span>
-        <span className="card-value">{visitante?.patente_visitante || 'N/A'}</span>
+        <span className="card-value">{patente_visitante || 'N/A'}</span>
       </div>
       <div className="card-actions">
         <button onClick={() => onDelete(id_visita)} className="delete-button">

@@ -80,7 +80,7 @@
 .form textarea {
     display: flex;
     border: 3px solid #003366;
-    border-radius: 12px;
+    border-radius: 15px;
     padding: 12px 15px;
     background-color: #eef7ff;
     font-size: 16px;
@@ -107,7 +107,7 @@
     justify-content: center;
     padding: 1rem 0;
     border-radius: 12px;
-    border: 3px solid #003366;
+    border: 3px solid #30383f;
     width: 100%;
     background-color: #003366;
     color: #eef7ff;
@@ -138,7 +138,7 @@
 }
 
 .form {
-	background-color: #eef7ff; /*Color del formulario*/
+	background-color: #ffffff; /*Color del formulario*/
 	padding: 7vh;
 	display: flex;
 	flex-direction: column;
@@ -156,13 +156,13 @@
 		display: flex;
 	}
 	label {
-		color: #003366; /*Color label de inputs del formulario*/
+		color: #2a2e31; /*Color label de inputs del formulario*/
 		font-weight: bold;
 		margin-bottom: 0.7vh;
 	}
 	input {
 		display: flex;
-		border: 3px solid #003366; /*Color del borde de inputs del formulario*/
+		border: 3px solid #000000; /*Color del borde de inputs del formulario*/
 		border-radius: 12px;
 		padding: 8px 5px;
 		background-repeat: no-repeat;
@@ -177,7 +177,7 @@
 		box-sizing: border-box;
 	}
 	input::placeholder {
-		color: rgba(0, 51, 102, 0.3);
+		color: rgba(32, 30, 30, 0.3);
 		font-weight: light;
 	}
 	input:focus {
@@ -186,7 +186,7 @@
 	}
 	select {
 		display: flex;
-		border: 3px solid #003366; /*Color del borde de selects del formulario*/
+		border: 3px solid #393b3d; /*Color del borde de selects del formulario*/
 		border-radius: 12px;
 		padding: 8px 5px;
 		background-repeat: no-repeat;
@@ -207,7 +207,7 @@
 		appearance: none;
 	}
 	select::placeholder {
-		color: rgba(0, 51, 102, 0.3);
+		color: rgba(64, 68, 71, 0.3);
 		font-weight: light;
 	}
 	select:focus {
@@ -224,14 +224,14 @@
 		background-color: #eef7ff;
 		font-weight: regular;
 		font-size: 16px;
-		color: #003366;
+		color: #2f3235;
 		border-radius: 12px;
 		background-position: right 10px center;
 		background-size: 25px 25px;
 		box-sizing: border-box;
 	}
 	textarea::placeholder {
-		color: rgba(0, 51, 102, 0.3);
+		color: rgba(48, 50, 53, 0.493);
 		font-weight: light;
 	}
 	textarea:focus {
@@ -246,7 +246,7 @@
 		border-radius: 12px;
 		border: none;
 		width: 100%;
-		background-color: #003366; /*Color del boton del formulario*/
+		background-color: #232425; /*Color del boton del formulario*/
 		color: #eef7ff;
 		font-weight: bold;
 		font-size: 16px;

@@ -1,5 +1,6 @@
 "use strict";
 import Joi from "joi";
+import { validarRutCompleto } from "../helpers/rut.helper.js";
 
 const domainEmailValidator = (value, helper) => {
   if (!value.endsWith("@gmail.cl")) {
@@ -33,16 +34,20 @@ export const userQueryValidation = Joi.object({
   rut_usuario: Joi.string()
     .min(9)
     .max(12)
-    .pattern(
-      /^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/,
-    )
+    .pattern(/^\d{7,8}-[\dkK]$/)
+    .custom((value, helpers) => {
+      if (!validarRutCompleto(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }, "RUT validation")
     .messages({
       "string.empty": "El rut no puede estar vacío.",
       "string.base": "El rut debe ser de tipo string.",
       "string.min": "El rut debe tener como mínimo 9 caracteres.",
       "string.max": "El rut debe tener como máximo 12 caracteres.",
-      "string.pattern.base":
-        "Formato rut inválido, debe ser xx.xxx.xxx-x o xxxxxxxx-x.",
+      "string.pattern.base": "Formato rut inválido, debe ser sin puntos y con guión.",
+      "any.invalid": "El RUT ingresado no es válido.",
     }),
   nombre_usuario: Joi.string()
     .min(1)
@@ -123,22 +128,21 @@ export const userBodyValidation = Joi.object({
   rut_usuario: Joi.string()
     .min(9)
     .max(12)
-    .pattern(
-      /^(?:(?:[1-9]\d{0}|[1-2]\d{1})(\.\d{3}){2}|[1-9]\d{6}|[1-2]\d{7}|29\.999\.999|29999999)-[\dkK]$/,
-    )
+    .pattern(/^\d{7,8}-[\dkK]$/)
+    .custom((value, helpers) => {
+      if (!validarRutCompleto(value)) {
+        return helpers.error("any.invalid");
+      }
+      return value;
+    }, "RUT validation")
     .messages({
       "string.empty": "El rut no puede estar vacío.",
       "string.base": "El rut debe ser de tipo string.",
       "string.min": "El rut debe tener como mínimo 9 caracteres.",
       "string.max": "El rut debe tener como máximo 12 caracteres.",
-      "string.pattern.base":
-        "Formato rut inválido, debe ser xx.xxx.xxx-x o xxxxxxxx-x.",
+      "string.pattern.base": "Formato rut inválido, debe ser sin puntos y con guión.",
+      "any.invalid": "El RUT ingresado no es válido.",
     }),
-  rol: Joi.string().min(4).max(15).messages({
-    "string.base": "El rol debe ser de tipo string.",
-    "string.min": "El rol debe tener como mínimo 4 caracteres.",
-    "string.max": "El rol debe tener como máximo 15 caracteres.",
-  }),
 })
   .or(
     "nombre_usuario",

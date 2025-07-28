@@ -30,6 +30,16 @@ const PersonSearchModal = ({
           </h1>
           
           <div className="container_inputs">
+            <label>Nombre</label>
+            <input
+              type="text"
+              value={searchFields.nombre}
+              onChange={(e) => setSearchFields(prev => ({ ...prev, nombre: e.target.value }))}
+              placeholder="Nombre de la persona"
+            />
+          </div>
+
+          <div className="container_inputs">
             <label>RUT</label>
             <input
               type="text"
@@ -39,15 +49,7 @@ const PersonSearchModal = ({
             />
           </div>
 
-          <div className="container_inputs">
-            <label>Nombre</label>
-            <input
-              type="text"
-              value={searchFields.nombre}
-              onChange={(e) => setSearchFields(prev => ({ ...prev, nombre: e.target.value }))}
-              placeholder="Nombre de la persona"
-            />
-          </div>
+
 
           <button onClick={handleSearchClick}>Buscar</button>
 

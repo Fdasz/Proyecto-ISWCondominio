@@ -10,11 +10,10 @@ import Error404 from '@pages/Error404';
 import EspaciosComunes from '@pages/EspaciosComunes';
 import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
-import '@styles/styles.css';
-import Visits from '@pages/Visits';
-import Visitas from '@pages/Visitas';
-import Visitante from '@pages/Visitante';
 import ReservasEspacios from '@pages/reservasEspaciosComunes';
+import VisitasMain from './pages/VisitasMain';
+import '@styles/styles.css';
+import '@styles/index.css';
 
 
 const router = createBrowserRouter([
@@ -34,28 +33,12 @@ const router = createBrowserRouter([
             <Users />
           </ProtectedRoute>
         )
-      },
-      {
-        path: 'visits',
-        element: (
-          <ProtectedRoute allowedRoles={['administrador', 'portero']}>
-            <Visits />
-          </ProtectedRoute>
-        )
-      },
+      }, 
       {
         path: 'visitas',
         element: (
           <ProtectedRoute allowedRoles={['administrador', 'portero']}>
-            <Visitas />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: 'visitante/new',
-        element: (
-          <ProtectedRoute allowedRoles={['administrador', 'portero']}>
-            <Visitante />
+            <VisitasMain />
           </ProtectedRoute>
         )
       },

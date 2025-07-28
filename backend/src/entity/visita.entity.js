@@ -34,7 +34,11 @@ const VisitaSchema = new EntitySchema({
       type: "varchar",
       length: 60,
       nullable: false,
-    }
+    },
+    patente_visitante: {
+      type: "varchar",
+      length: 9,
+    },
   },
   relations: {
     visitante: {

@@ -1,4 +1,3 @@
-// src/pages/VisitsForm.jsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSearchPerson } from '@hooks/visits/useSearchPerson';
@@ -7,9 +6,9 @@ import Form from '@components/Form';
 import { createVisita } from '@services/visita.service';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
 import '@styles/form.css';
-import '@styles/visits.css';
+import '@styles/visitas_main.css';
 
-const Visits = () => {
+const RegistrarVisitasForm = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -18,7 +17,6 @@ const Visits = () => {
     rut_visitante: '',
     nombre_visitante: '',
     patente_visitante: '',
-    fecha_visita: '',
   });
 
   const {
@@ -38,15 +36,15 @@ const Visits = () => {
 
   const handleFormSubmit = async (data) => {
     const finalData = { ...formData, ...data };
-    if (!finalData.rut_usuario || !finalData.rut_visitante || !finalData.fecha_visita) {
-      showErrorAlert('Campos incompletos', 'Debe seleccionar un residente, un visitante y una fecha.');
+    if (!finalData.rut_usuario || !finalData.rut_visitante) {
+      showErrorAlert('Campos incompletos', 'Debe seleccionar un residente y un visitante.');
       return;
     }
     try {
       const response = await createVisita(finalData);
       if (response.status === 'Success') {
         showSuccessAlert('Éxito', 'Visita registrada correctamente.');
-        navigate('/home');
+        navigate('/visitas');
       } else {
         showErrorAlert('Error', response.message || 'No se pudo registrar la visita.');
       }
@@ -58,70 +56,66 @@ const Visits = () => {
 
   const visitFields = [
     {
-      label: "Residente",
-      name: "nombre_usuario",
-      placeholder: "Click para buscar residente...",
+      name: 'residente',
+      label: 'Residente',
+      placeholder: 'Click para buscar residente...',
       fieldType: 'input',
-      type: "text",
+      type: 'text',
+      className: 'form-field',
       readOnly: true,
       value: formData.nombre_usuario,
       onClick: () => openSearchModal('usuario')
     },
     {
-      label: "RUT Residente",
-      name: "rut_usuario",
-      placeholder: "RUT del residente...",
+      name: 'visitante',
+      label: 'Visitante',
+      placeholder: 'Click para buscar visitante...',
       fieldType: 'input',
-      type: "text",
-      readOnly: true,
-      value: formData.rut_usuario
-    },
-    {
-      label: "Visitante",
-      name: "nombre_visitante",
-      placeholder: "Click para buscar visitante...",
-      fieldType: 'input',
-      type: "text",
+      type: 'text',
+      className: 'form-field',
       readOnly: true,
       value: formData.nombre_visitante,
       onClick: () => openSearchModal('visitante')
     },
     {
-      label: "RUT Visitante",
-      name: "rut_visitante",
-      placeholder: "RUT del visitante...",
+      name: 'rut_residente',
+      label: 'RUT Residente',
+      placeholder: 'RUT del residente...',
       fieldType: 'input',
-      type: "text",
+      type: 'text',
+      className: 'form-field',
+      readOnly: true,
+      value: formData.rut_usuario
+    },
+    {
+      name: 'rut_visitante',
+      label: 'RUT Visitante',
+      placeholder: 'RUT del visitante...',
+      fieldType: 'input',
+      type: 'text',
+      className: 'form-field',
       readOnly: true,
       value: formData.rut_visitante
     },
     {
-      label: "Patente del Vehículo (Opcional)",
-      name: "patente_visitante",
-      placeholder: "Ej: ABCD12",
+      name: 'patente_visitante',
+      label: 'Patente',
+      placeholder: 'Ingrese la patente del vehículo del visitante...',
       fieldType: 'input',
-      type: "text",
-      readOnly: true,
+      type: 'text',
+      className: 'form-field patente-field',
       value: formData.patente_visitante,
       onChange: handleChange
     },
-    {
-      label: "Fecha y Hora de Visita",
-      name: "fecha_visita",
-      fieldType: 'input',
-      type: "datetime-local",
-      value: formData.fecha_visita,
-      onChange: handleChange
-    }
   ];
 
   return (
-    <main className="page-container">
+    <div className="visitas-shared-container">
       <Form
-        title="Registrar Visita"
         fields={visitFields}
         buttonText="Registrar"
         onSubmit={handleFormSubmit}
+        formClassName="visitas-form-grid"
       />
 
       <PersonSearchModal
@@ -132,8 +126,8 @@ const Visits = () => {
         onSelect={handleSelectPerson}
         onSearch={handleSearch}
       />
-    </main>
+    </div>
   );
 };
 
-export default Visits;
+export default RegistrarVisitasForm;

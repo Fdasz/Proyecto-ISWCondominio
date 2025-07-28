@@ -47,8 +47,7 @@ export const useSearchPerson = (formData, setFormData) => {
             setFormData({
                 ...formData,
                 rut_visitante: person.rut_visitante,
-                nombre_visitante: person.nombre_visitante,
-                patente_visitante: person.patente_visitante || ''
+                nombre_visitante: person.nombre_visitante
             });
         } else { // 'usuario'
             setFormData({

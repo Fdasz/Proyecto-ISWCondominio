@@ -1,4 +1,3 @@
-"use strict";
 import {
     createVisitanteService,
     deleteVisitanteService,
@@ -8,7 +7,8 @@ import {
 } from "../services/visitante.service.js";
 import {
     visitanteBodyValidation,
-    visitanteQueryValidation
+    visitanteQueryValidation,
+    visitanteUpdateValidation
 } from "../validations/visitante.validation.js";
 import {
     handleErrorClient,
@@ -78,7 +78,7 @@ export async function updateVisitante(req, res) {
         const { id_visitante } = req.params;
         const { body } = req;
 
-        const { error: bodyError } = visitanteBodyValidation.validate(body);
+        const { error: bodyError } = visitanteUpdateValidation.validate(body);
         if (bodyError) return handleErrorClient(res, 400, bodyError.message);
 
         const [visitante, errorVisitante] = await updateVisitanteService(
