@@ -62,7 +62,7 @@ const Navbar = () => {
                         </NavLink>
                     </li>
                     )}
-                    {userRole === 'administrador' && (
+                    {(userRole === 'administrador' || userRole === 'portero' || userRole === 'visitante') && (
                     <li>
                         <NavLink 
                             to="/reservasEspaciosComunes" 
