@@ -4,9 +4,9 @@ import { isAdmin } from "../middlewares/authorization.middleware.js";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 import {
   createEspacioComun,
-  updateEspacioComun,
+  getEspacioComun,
   removeEspacioComun,
-  getEspacioComun
+  updateEspacioComun
 } from "../controllers/espacioComun.controller.js";
 
 const router = Router();

@@ -61,9 +61,15 @@ button:focus-visible {
   }
 }
 .main-content {
-  margin-left: 220px; /* Sidebar width */
+  margin-left: 240px;
   min-height: 100vh;
   background: #fff;
-  width: calc(100vw - 220px);
+  width: calc(100vw - 240px);
   padding: 0;
+}
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 60px;
+    width: calc(100vw - 60px);
+  }
 }

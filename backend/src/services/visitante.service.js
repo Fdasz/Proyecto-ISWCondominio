@@ -73,9 +73,7 @@ export async function updateVisitanteService(query, body) {
 
         if (!visitanteFound) return [null, "Visitante no encontrado"];
 
-        // Only check for duplicate RUT if we're updating the RUT
         if (body.rut_visitante) {
-            // Check if there are existing visits for this visitante
             const visitaRepository = AppDataSource.getRepository("Visita");
             const existingVisits = await visitaRepository.find({
                 where: { rut_visitante: visitanteFound.rut_visitante }

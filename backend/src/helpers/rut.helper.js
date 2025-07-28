@@ -14,7 +14,6 @@ export function calcularDV(rut) {
 }
 
 export function validarRutCompleto(rutCompleto) {
-    // Remove dots and spaces
     rutCompleto = rutCompleto.replace(/\./g, "").replace(/\s/g, "");
     const match = rutCompleto.match(/^(\d+)-([\dkK])$/);
     if (!match) return false;

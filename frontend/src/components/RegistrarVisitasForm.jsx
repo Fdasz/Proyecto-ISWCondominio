@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSearchPerson } from '@hooks/visits/useSearchPerson';
 import PersonSearchModal from '@components/SearchPerson';
-import Form from '@components/Form';
+import VisitasForm from '@components/VisitasForm';
 import { createVisita } from '@services/visita.service';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
-import '@styles/form.css';
 import '@styles/visitas_main.css';
 
 const RegistrarVisitasForm = () => {
@@ -111,11 +110,11 @@ const RegistrarVisitasForm = () => {
 
   return (
     <div className="visitas-shared-container">
-      <Form
+      <VisitasForm
         fields={visitFields}
         buttonText="Registrar"
         onSubmit={handleFormSubmit}
-        formClassName="visitas-form-grid"
+        useGrid={true}
       />
 
       <PersonSearchModal

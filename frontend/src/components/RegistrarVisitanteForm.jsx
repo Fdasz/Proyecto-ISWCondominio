@@ -1,8 +1,7 @@
-import Form from '@components/Form';
+import VisitasForm from '@components/VisitasForm';
 import { createVisitante } from '@services/visitante.service';
 import { showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
 import { useNavigate } from 'react-router-dom';
-import '@styles/form.css';
 import '@styles/visitas_main.css';
 
 const fields = [
@@ -43,11 +42,11 @@ const RegistrarVisitanteForm = () => {
 
   return (
     <div className="visitas-shared-container">
-      <Form
+      <VisitasForm
         fields={fields}
         buttonText="Registrar"
         onSubmit={handleFormSubmit}
-        formClassName="visitas-form-grid"
+        useGrid={true}
       />
     </div>
   );

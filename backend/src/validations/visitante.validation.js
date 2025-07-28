@@ -89,7 +89,6 @@ export const visitanteBodyValidation = Joi.object({
     "object.unknown": "No se permiten propiedades adicionales.",
   });
 
-// Validation for updating visitantes (allows partial updates)
 export const visitanteUpdateValidation = Joi.object({
   rut_visitante: Joi.string()
     .min(9)

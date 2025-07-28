@@ -4,14 +4,14 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from '@pages/Login';
 import Home from '@pages/Home';
-import Users from '@pages/Users';
-import Register from '@pages/Register';
 import Error404 from '@pages/Error404';
 import EspaciosComunes from '@pages/EspaciosComunes';
 import Root from '@pages/Root';
 import ProtectedRoute from '@components/ProtectedRoute';
 import ReservasEspacios from '@pages/reservasEspaciosComunes';
-import VisitasMain from './pages/VisitasMain';
+import VisitasRoutes from './pages/VisitasRoutes';
+import GestionarVisitasForm from '@components/GestionarVisitasForm';
+import GestionarVisitantesForm from '@components/GestionarVisitantesForm';
 import '@styles/styles.css';
 import '@styles/index.css';
 
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: 'users',
         element: (
           <ProtectedRoute allowedRoles={['administrador']}>
-            <Users />
+            {/* <Register /> removed as per user request */}
           </ProtectedRoute>
         )
       }, 
@@ -38,9 +38,13 @@ const router = createBrowserRouter([
         path: 'visitas',
         element: (
           <ProtectedRoute allowedRoles={['administrador', 'portero']}>
-            <VisitasMain />
+            <VisitasRoutes />
           </ProtectedRoute>
-        )
+        ),
+        children: [
+          { path: 'gestionar-visitas', element: <GestionarVisitasForm /> },
+          { path: 'gestionar-visitantes', element: <GestionarVisitantesForm /> },
+        ]
       },
       {
         path: '/espaciosComunes',
@@ -64,10 +68,6 @@ const router = createBrowserRouter([
     path: 'auth',
     element: <Login />
   },
-  {
-    path: 'register',
-    element: <Register />
-  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

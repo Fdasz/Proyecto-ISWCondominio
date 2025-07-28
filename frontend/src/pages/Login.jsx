@@ -37,7 +37,7 @@ const Login = () => {
                 fields={[
                     {
                         label: "Correo electrónico",
-                        name: "email_usuario", // <-- updated
+                        name: "email_usuario",
                         placeholder: "example@gmail.cl",
                         fieldType: 'input',
                         type: "email",
@@ -67,11 +67,6 @@ const Login = () => {
                 ]}
                 buttonText="Iniciar sesión"
                 onSubmit={loginSubmit}
-                footerContent={
-                    <p>
-                        ¿No tienes cuenta?, <a href="/register">¡Regístrate aquí!</a>
-                    </p>
-                }
             />
         </main>
     );

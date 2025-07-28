@@ -8,8 +8,8 @@ import {
 } from "../services/reservaEspacio.service.js";
 import {
     reservaEspacioBodyValidation,
-    reservaEspacioUpdateValidation,
-    reservaEspacioQueryValidation
+    reservaEspacioQueryValidation,
+    reservaEspacioUpdateValidation
 } from "../validations/reservaEspacio.validation.js";
 import {
     handleErrorClient,
@@ -21,7 +21,6 @@ export async function getReservaEspacio(req, res) {
     try {
         const { id_reserva, fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_usuario } = req.query;
 
-        // Validación de query parameters
         const { error } = reservaEspacioQueryValidation.validate({
             id_reserva,
             fecha_reserva,
@@ -58,7 +57,6 @@ export async function createReservaEspacio(req, res) {
     try {
         const { fecha_reserva, hora_inicio, hora_fin, id_espacio, rut_usuario } = req.body;
 
-        // Validación del body (sin incluir id_reserva ya que es auto-generado)
         const { error } = reservaEspacioBodyValidation.validate({
             fecha_reserva,
             hora_inicio,
@@ -84,13 +82,11 @@ export async function updateReservaEspacio(req, res) {
         const { id_reserva } = req.params;
         const { fecha_reserva, hora_inicio, hora_fin, id_espacio } = req.body;
 
-        // Validar que id_reserva sea un número válido
         const idReserva = parseInt(id_reserva);
         if (isNaN(idReserva) || idReserva <= 0) {
             return handleErrorClient(res, 400, "ID de reserva inválido");
         }
 
-        // Usar la validación específica para updates (sin rut_usuario)
         const { error } = reservaEspacioUpdateValidation.validate({
             fecha_reserva,
             hora_inicio,
@@ -114,7 +110,6 @@ export async function deleteReservaEspacio(req, res) {
     try {
         const { id_reserva } = req.params;
 
-        // Validar que id_reserva sea un número válido
         const idReserva = parseInt(id_reserva);
         if (isNaN(idReserva) || idReserva <= 0) {
             return handleErrorClient(res, 400, "ID de reserva inválido");

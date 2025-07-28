@@ -1,9 +1,8 @@
 import { useVisitas } from '@hooks/visits/useVisitas';
-import Form from '@components/Form';
+import VisitasForm from '@components/VisitasForm';
 import VisitaCard from '@components/VisitaCard';
 import { deleteDataAlert, showSuccessAlert, showErrorAlert } from '@helpers/sweetAlert';
 import { deleteVisita } from '@services/visita.service';
-import '@styles/form.css';
 import '@styles/visitas_main.css';
 
 const BuscarVisitasForm = () => {
@@ -29,7 +28,7 @@ const BuscarVisitasForm = () => {
 
   return (
     <div className="visitas-shared-container">
-      <Form
+      <VisitasForm
         fields={[
           { name: 'nombre_visitante', label: 'Nombre Visitante', placeholder: 'Ingrese el nombre del visitante...', fieldType: 'input', type: 'text', className: 'form-field' },
           { name: 'nombre_usuario', label: 'Nombre Residente', placeholder: 'Ingrese el nombre del residente...', fieldType: 'input', type: 'text', className: 'form-field' },
@@ -41,7 +40,7 @@ const BuscarVisitasForm = () => {
         ]}
         buttonText="Buscar"
         onSubmit={handleSearch}
-        formClassName="visitas-form-grid"
+        useGrid={true}
       />
 
       <div className="results-container">

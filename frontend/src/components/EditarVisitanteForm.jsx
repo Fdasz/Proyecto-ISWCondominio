@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { updateVisitante } from '../services/visitante.service';
 import { useSearchPerson } from '@hooks/visits/useSearchPerson';
 import PersonSearchModal from './SearchPerson';
-import Form from './Form';
+import VisitasForm from './VisitasForm';
 import { showSuccessAlert, showErrorAlert } from '../helpers/sweetAlert';
 import '../styles/visitas_main.css';
 
@@ -108,7 +108,7 @@ export default function EditarVisitanteForm() {
       <div className="search-section">
         <button 
           type="button" 
-          className="btn btn-primary" 
+          className="gestionar-search-btn"
           onClick={() => openSearchModal('visitante')}
           style={{ marginBottom: '20px' }}
         >
@@ -133,11 +133,11 @@ export default function EditarVisitanteForm() {
       )}
 
       {visitante ? (
-        <Form
+        <VisitasForm
           fields={editFields}
           buttonText={loading ? 'Actualizando...' : 'Actualizar Visitante'}
           onSubmit={handleUpdate}
-          formClassName="visitas-form-grid"
+          useGrid={true}
         />
       ) : (
         <div className="visitas-hint">

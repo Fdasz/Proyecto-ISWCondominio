@@ -77,6 +77,7 @@ export const espacioComunBodyValidation = Joi.object({
   .messages({
     "object.unknown": "No se permiten propiedades adicionales.",
     "object.missing":
+      // eslint-disable-next-line max-len
       "Debes proporcionar al menos un parámetro: id_espacio, tipo_espacio_comun, descripcion_espacio_comun o estado_espacio_comun.",
   });
 

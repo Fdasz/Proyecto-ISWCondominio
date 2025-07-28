@@ -51,25 +51,25 @@ const PersonSearchModal = ({
 
 
 
-          <button onClick={handleSearchClick}>Buscar</button>
+          <button className="visitas-submit-button" onClick={handleSearchClick}>Buscar</button>
 
           {results && results.length > 0 ? (
             <div style={{ marginTop: '20px', maxHeight: '300px', overflowY: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <table className="search-results-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th>RUT</th>
-                    <th>Nombre</th>
-                    <th>Acción</th>
+                    <th style={{ color: '#fff', background: '#374151', fontWeight: 700 }}>RUT</th>
+                    <th style={{ color: '#fff', background: '#374151', fontWeight: 700 }}>Nombre</th>
+                    <th style={{ color: '#fff', background: '#374151', fontWeight: 700 }}>Acción</th>
                   </tr>
                 </thead>
                 <tbody>
                   {results.map((person, index) => (
                     <tr key={index}>
-                      <td>{searchType === 'visitante' ? person.rut_visitante : person.rut_usuario}</td>
-                      <td>{searchType === 'visitante' ? person.nombre_visitante : person.nombre_usuario}</td>
-                      <td>
-                        <button onClick={() => onSelect(person)}>
+                      <td style={{ color: '#111', background: '#fff', fontWeight: 500 }}>{searchType === 'visitante' ? person.rut_visitante : person.rut_usuario}</td>
+                      <td style={{ color: '#111', background: '#fff', fontWeight: 500 }}>{searchType === 'visitante' ? person.nombre_visitante : person.nombre_usuario}</td>
+                      <td style={{ color: '#111', background: '#fff', fontWeight: 500 }}>
+                        <button className="visitas-submit-button" onClick={() => onSelect(person)}>
                           Seleccionar
                         </button>
                       </td>

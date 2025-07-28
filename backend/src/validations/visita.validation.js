@@ -47,7 +47,7 @@ export const visitaQueryValidation = Joi.object({
       "string.empty": "El nombre del visitante no puede estar vacío.",
       "string.base": "El nombre del visitante debe ser de tipo string.",
       "string.min":
-        "El nombre del visitante debe tener como mínimo 15 caracteres.",
+        "El nombre del visitante debe tener como mínimo 3 caracteres.",
       "string.max":
         "El nombre del visitante debe tener como máximo 60 caracteres.",
       "string.pattern.base":
@@ -70,7 +70,7 @@ export const visitaQueryValidation = Joi.object({
       "string.empty": "El nombre del residente no puede estar vacío.",
       "string.base": "El nombre del residente debe ser de tipo string.",
       "string.min":
-        "El nombre del residente debe tener como mínimo 15 caracteres.",
+        "El nombre del residente debe tener como mínimo 3 caracteres.",
       "string.max":
         "El nombre del residente debe tener como máximo 60 caracteres.",
       "string.pattern.base":

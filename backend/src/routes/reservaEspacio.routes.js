@@ -5,8 +5,8 @@ import {
     getReservaEspacio,
     updateReservaEspacio
 } from "../controllers/reservaEspacio.controller.js";
-import { isAdmin} from "../middlewares/authorization.middleware.js";
-import { Router} from "express";
+import { isAdmin } from "../middlewares/authorization.middleware.js";
+import { Router } from "express";
 import { authenticateJwt } from "../middlewares/authentication.middleware.js";
 
 const router = Router();
